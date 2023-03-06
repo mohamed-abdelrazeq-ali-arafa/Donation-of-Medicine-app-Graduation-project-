@@ -20,7 +20,7 @@ public class DiseaseService implements IDiseaseService {
         this.diseaseRepository=diseaseRepository;
     }
     @Override
-    public Response addDisease(Disease disease) {
+    public Response<Disease> addDisease(Disease disease) {
         var res=new Response();
         diseaseRepository.save(disease);
         res.make("Success Insert of Disease",201,disease);
@@ -28,7 +28,7 @@ public class DiseaseService implements IDiseaseService {
     }
 
     @Override
-    public Response getDiseasById(String id) {
+    public Response<Disease> getDiseasById(String id) {
         var res=new Response();
         Disease tempDisease=diseaseRepository.findById(id).orElse(null);
         if(tempDisease==null)
@@ -41,7 +41,7 @@ public class DiseaseService implements IDiseaseService {
     }
 
     @Override
-    public Response getAllDisease() {
+    public Response<List<Disease>> getAllDisease() {
         var res=new Response();
         List<Disease> diseases= diseaseRepository.findAll();
         res.make("Sucess retrive of disease",200,diseases);
@@ -49,7 +49,7 @@ public class DiseaseService implements IDiseaseService {
     }
 
     @Override
-    public Response deleteDiseaseById(String id) {
+    public Response<Disease> deleteDiseaseById(String id) {
         var res=new Response();
         Disease tempDisease=diseaseRepository.findById(id).orElse(null);
         if(tempDisease==null)
@@ -62,7 +62,7 @@ public class DiseaseService implements IDiseaseService {
     }
 
     @Override
-    public Response updateDisease(String id, Disease disease) {
+    public Response<Disease> updateDisease(String id, Disease disease) {
         var res=new Response();
         Disease tempDisease=diseaseRepository.findById(id).orElse(null);
         if(tempDisease==null)
