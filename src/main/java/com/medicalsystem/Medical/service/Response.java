@@ -1,23 +1,51 @@
 package com.medicalsystem.Medical.service;
+import java.sql.Array;
+import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Response {
+public class Response <t> {
 
-    private static HashMap<String, Object> response = new HashMap<>();
+    private t data;
+    String error ;
 
-    public static HashMap<String, Object> make(String msg, Integer code, Object data){
-        response.put("code", code);
-        response.put("message", msg);
-        response.put("data", data);
-        return response;
+    private boolean isSuccess;
+
+
+    public t getData() {
+        return data;
     }
 
-    public int getCode(){
-        return (int) response.get("code");
+
+    public String getArr() {
+        return error;
     }
 
-    public static HashMap<String, Object> toData(){
-        return response;
+    public boolean isSuccess() {
+        return isSuccess;
+    }
+
+    public  void  sucess(t data){
+        this.data=data;
+        isSuccess=true;
+        this.error=null;
+
+    }
+
+    public  void  failure(String error){
+        isSuccess=false;
+        this.error=error;
+
+    }
+    public void make(String msg,int code,t data){
+
+        if(code==400) {
+            failure(msg);
+        }
+        else
+        {
+            sucess(data);
+        }
+
     }
 }
 

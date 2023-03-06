@@ -9,15 +9,15 @@ import java.util.Optional;
 
 public interface IDiseaseService {
 
-    public Response addDisease(Disease disease);
+    public Response<Disease> addDisease(Disease disease);
 
-    public Response getDiseasById(String id);
+    public Response<Disease> getDiseasById(String id);
 
-    public Response getAllDisease();
+    public Response<List<Disease>> getAllDisease();
 
-    public Response deleteDiseaseById(String id);
+    public Response<Disease> deleteDiseaseById(String id);
 
-    public Response updateDisease(String id,Disease disease);
+    public Response<Disease> updateDisease(String id,Disease disease);
 
 
 

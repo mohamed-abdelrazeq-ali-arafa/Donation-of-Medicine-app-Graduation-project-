@@ -19,17 +19,18 @@ public class StockService implements IStockService {
         this.stockRepository=stockRepository;
     }
     @Override
-    public Response addStock(Stock stock) {
-        var res=new Response();
+    public Response<Stock> addStock(Stock stock) {
+        var res=new Response<Stock>();
         stockRepository.save(stock);
         res.make("Success insert for Stock",200,stock);
+        res.sucess(stock);
         return res;
 
     }
 
     @Override
-    public Response deleteStockBId(String id) {
-        Response res=new Response();
+    public Response<Stock> deleteStockBId(String id) {
+        Response res=new Response<Stock>();
         Stock tempStock=stockRepository.findById(id).orElse(null);
         if(tempStock==null)
         {
@@ -45,8 +46,8 @@ public class StockService implements IStockService {
     }
 
     @Override
-    public Response getStockById(String id) {
-        Response res=new Response();
+    public Response<Stock> getStockById(String id) {
+        Response res=new Response<Stock>();;
         Stock result = stockRepository.findById(id).orElse(null);
         if(result==null)
         {
@@ -59,16 +60,16 @@ public class StockService implements IStockService {
     }
 
     @Override
-    public Response getAllStock() {
-        var res=new Response();
+    public Response<List<Stock>> getAllStock() {
+        var res=new Response<List<Stock>>();
         List<Stock>stocks=stockRepository.findAll();
         res.make("Success Retrive of Stock", 201, stocks);
         return res;
     }
 
     @Override
-    public Response updateStock(String id, Stock stock) {
-        var res=new Response();
+    public Response<Stock> updateStock(String id, Stock stock) {
+        var res=new Response<Stock>();
         Stock tempStock=stockRepository.findById(id).orElse(null);
         if(tempStock==null)
             res.make("Failed to retrive  for Stock id is not found", 400, tempStock);

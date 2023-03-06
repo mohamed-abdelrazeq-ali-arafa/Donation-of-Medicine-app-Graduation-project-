@@ -24,18 +24,18 @@ public class UserService implements IUserService {
 
 
     @Override
-    public Response addUser(User user) {
-        var res=new Response();
+    public Response<User> addUser(User user) {
+        var res=new Response<User>();
         userRepository.save(user);
-        res.make("Success insert",201,user);
+        res.sucess(user);
         return  res;
 
     }
 
     @Override
-    public Response deleteUserById(String id) {
-        var res = new Response();
-        Optional<User> result = userRepository.findById(id);
+    public Response<User> deleteUserById(String id) {
+        var res = new Response<User>();
+        User result = userRepository.findById(id).orElse(null);
         if (result == null) {
             res.make("Failed to delete", 400, result);
         }
@@ -47,8 +47,8 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public Response getUserById(String id) {
-        var res=new Response();
+    public Response<User> getUserById(String id) {
+        var res=new Response<User>();
         User result = userRepository.findById(id).orElse(null);
         if(result==null)
         {
@@ -62,16 +62,16 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public Response getAllUsers() {
-        var res=new Response();
+    public Response<List<User>> getAllUsers() {
+        var res=new Response<List<User>>();
         List<User>users=userRepository.findAll();
         res.make("Success Retrive", 201, users);
         return res;
     }
 
     @Override
-    public Response updateUser(String id, User user) {
-        var res=new Response();
+    public Response<User> updateUser(String id, User user) {
+        var res=new Response<User>();
         User tempUser=userRepository.findById(id).orElse(null);
         if(tempUser==null)
             res.make("Failed to Update", 400, tempUser);
@@ -89,6 +89,8 @@ public class UserService implements IUserService {
             userRepository.save(tempUser);
             res.make("Success Update", 201, tempUser);
         }
+
+
         return res;
     }
 

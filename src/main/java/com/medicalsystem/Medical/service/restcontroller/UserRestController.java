@@ -15,6 +15,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
+import static org.springframework.http.ResponseEntity.status;
+
 @RestController
 @RequestMapping("/api/users")
 public class UserRestController {
@@ -27,40 +29,40 @@ public class UserRestController {
     }
 
     @RequestMapping(value="/adduser",method = RequestMethod.POST)
-    public ResponseEntity addUser(@RequestBody User user){
-        Response response=userService.addUser(user);
-        return ResponseEntity.status(response.getCode()).body(response.toData());
+    public Response<User> addUser(@RequestBody User user){
+        Response<User> response=userService.addUser(user);
+        return response;
 
     }
 
 
     @RequestMapping(value="/deleteuser/{theid}",method = RequestMethod.DELETE)
-    public ResponseEntity deleteUser(@PathVariable String theid){
-          var res=userService.deleteUserById(theid);
-          return ResponseEntity.status(res.getCode()).body(res.toData());
+    public Response<User> deleteUser(@PathVariable String theid){
+        Response<User> response=userService.deleteUserById(theid);
+        return response;
     }
-
-    @RequestMapping(value="/getuser/{theid}",method = RequestMethod.GET)
-    public ResponseEntity getUser(@PathVariable String theid){
-
-        var res=userService.getUserById(theid);
-        return ResponseEntity.status(res.getCode()).body(res.toData());
-
-    }
-
-    @RequestMapping(value="/getalluser",method = RequestMethod.GET)
-    public ResponseEntity getAllUser(){
-
-        var res=userService.getAllUsers();
-        return ResponseEntity.status(res.getCode()).body(res.toData());
-
-    }
-
-    @RequestMapping(value="/updateuser/{theid}",method = RequestMethod.PUT)
-    public ResponseEntity updateUser(@PathVariable String theid, @RequestBody User user){
-        var res=userService.updateUser(theid,user);
-        return ResponseEntity.status(res.getCode()).body(res.toData());
-    }
+//
+//    @RequestMapping(value="/getuser/{theid}",method = RequestMethod.GET)
+//    public ResponseEntity getUser(@PathVariable String theid){
+//
+//        var res=userService.getUserById(theid);
+//        return status(res.getCode()).body(res.toData());
+//
+//    }
+//
+//    @RequestMapping(value="/getalluser",method = RequestMethod.GET)
+//    public ResponseEntity getAllUser(){
+//
+//        var res=userService.getAllUsers();
+//        return status(res.getCode()).body(res.toData());
+//
+//    }
+//
+//    @RequestMapping(value="/updateuser/{theid}",method = RequestMethod.PUT)
+//    public ResponseEntity updateUser(@PathVariable String theid, @RequestBody User user){
+//        var res=userService.updateUser(theid,user);
+//        return status(res.getCode()).body(res.toData());
+//    }
 
 
 }

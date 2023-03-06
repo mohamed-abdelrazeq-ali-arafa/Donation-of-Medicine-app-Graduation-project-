@@ -79,6 +79,7 @@ public class DiseaseService implements IDiseaseService {
         diseaseRepository.save(tempDisease);
         res.make("Sucess Update of Disease",200,tempDisease);
         }
+
           return res;
     }
 

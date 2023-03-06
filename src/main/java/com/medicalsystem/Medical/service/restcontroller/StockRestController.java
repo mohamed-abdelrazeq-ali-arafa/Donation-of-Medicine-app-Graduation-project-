@@ -21,36 +21,36 @@ public class StockRestController {
     }
 
     @RequestMapping(value="/addstock",method = RequestMethod.POST)
-    public ResponseEntity addStock(@RequestBody Stock stock){
-        Response res=stockService.addStock(stock);
-        return ResponseEntity.status(res.getCode()).body(res.toData());
+    public Response<Stock> addStock(@RequestBody Stock stock){
+        Response<Stock> res=stockService.addStock(stock);
+        return res;
 
 
     }
 
     @RequestMapping(value="/getstock/{theid}",method = RequestMethod.GET)
-    public ResponseEntity  getStock(@PathVariable String theid){
-        Response res=stockService.getStockById(theid);
-        return ResponseEntity.status(res.getCode()).body(res.toData());
+    public Response<Stock>  getStock(@PathVariable String theid){
+        Response<Stock> res=stockService.getStockById(theid);
+        return res;
 
     }
     @RequestMapping(value="/getallstock",method = RequestMethod.GET)
-    public ResponseEntity getAllStock(){
-        Response res=stockService.getAllStock();
-        return ResponseEntity.status(res.getCode()).body(res.toData());
+    public Response<List<Stock>> getAllStock(){
+        Response<List<Stock>> res=stockService.getAllStock();
+        return res;
 
     }
     @RequestMapping(value="/deletestock/{theid}",method = RequestMethod.DELETE)
-    public ResponseEntity deleteStock(@PathVariable String theid){
-        Response res=stockService.deleteStockBId(theid);
-        return ResponseEntity.status(res.getCode()).body(res.toData());
+    public Response<Stock> deleteStock(@PathVariable String theid){
+        Response<Stock> res=stockService.deleteStockBId(theid);
+        return res;
     }
 
     @RequestMapping(value="/updatestock/{theid}",method = RequestMethod.PUT)
-    public ResponseEntity updateStock(@PathVariable String theid,@RequestBody Stock stock){
+    public Response<Stock> updateStock(@PathVariable String theid,@RequestBody Stock stock){
 
-        Response res=stockService.updateStock(theid,stock);
-        return ResponseEntity.status(res.getCode()).body(res.toData());
+        Response<Stock> res=stockService.updateStock(theid,stock);
+        return res;
 
 
     }

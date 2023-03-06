@@ -8,12 +8,12 @@ import java.util.List;
 
 public interface ILogService {
 
-    public Response addLog(Log log);
+    public Response<Log> addLog(Log log);
 
-    public Response deleteLog(String id);
-    public Response getLog(String id);
-    public Response getAllLog();
-    public Response updatelog(String id, @RequestBody Log log);
+    public Response<Log> deleteLog(String id);
+    public Response<Log> getLog(String id);
+    public Response<List<Log>> getAllLog();
+    public Response<Log> updatelog(String id, @RequestBody Log log);
 
 
 }

@@ -9,11 +9,11 @@ import java.util.Optional;
 
 public interface IUserService {
 
-    public Response addUser(User user);
-    public Response deleteUserById(String id);
-    public Response getUserById(String id);
-    public Response getAllUsers();
-    public Response updateUser(String id,User user);
+    public Response<User> addUser(User user);
+    public Response<User> deleteUserById(String id);
+    public Response<User> getUserById(String id);
+    public Response<List<User>> getAllUsers();
+    public Response<User> updateUser(String id,User user);
 
 
 

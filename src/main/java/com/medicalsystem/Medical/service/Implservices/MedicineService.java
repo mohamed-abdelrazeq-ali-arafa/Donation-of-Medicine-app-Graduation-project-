@@ -21,7 +21,7 @@ public class MedicineService implements IMedicineService {
     }
 
     @Override
-    public Response addMedicine(Medicine medicine) {
+    public Response<Medicine> addMedicine(Medicine medicine) {
         var res=new Response();
         medicineRepository.save(medicine);
         res.make("Success insert for Medicine",200,medicine);
@@ -30,7 +30,7 @@ public class MedicineService implements IMedicineService {
     }
 
     @Override
-    public Response deleteMedicineById(String theid) {
+    public Response<Medicine>  deleteMedicineById(String theid) {
         Response res=new Response();
         Medicine tempMedicine=medicineRepository.findById(theid).orElse(null);
         if(tempMedicine==null)
@@ -47,7 +47,7 @@ public class MedicineService implements IMedicineService {
     }
 
     @Override
-    public Response getMedicineById(String theid) {
+    public Response<Medicine>  getMedicineById(String theid) {
         Response res=new Response();
         Medicine result = medicineRepository.findById(theid).orElse(null);
         if(result==null)
@@ -61,7 +61,7 @@ public class MedicineService implements IMedicineService {
     }
 
     @Override
-    public Response getAllMedicine() {
+    public Response<List<Medicine>>  getAllMedicine() {
         var res=new Response();
         List<Medicine>medicines=medicineRepository.findAll();
         res.make("Success Retrive of Medicine", 201, medicines);
@@ -70,7 +70,7 @@ public class MedicineService implements IMedicineService {
     }
 
     @Override
-    public Response updateMedicine(String id, Medicine medicine) {
+    public Response<Medicine>  updateMedicine(String id, Medicine medicine) {
         var res=new Response();
         Medicine tempMedicine=medicineRepository.findById(id).orElse(null);
         if(tempMedicine==null)

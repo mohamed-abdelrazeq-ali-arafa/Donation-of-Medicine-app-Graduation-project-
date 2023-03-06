@@ -7,11 +7,11 @@ import java.util.List;
 
 public interface IMedicineService {
 
-    public Response addMedicine(Medicine medicine);
-    public Response deleteMedicineById(String theid);
-    public Response getMedicineById(String theid);
-    public Response getAllMedicine();
-    public Response updateMedicine(String id,Medicine medicine);
+    public Response<Medicine> addMedicine(Medicine medicine);
+    public Response<Medicine> deleteMedicineById(String theid);
+    public Response<Medicine> getMedicineById(String theid);
+    public Response<List<Medicine>> getAllMedicine();
+    public Response<Medicine> updateMedicine(String id,Medicine medicine);
 
 
 }

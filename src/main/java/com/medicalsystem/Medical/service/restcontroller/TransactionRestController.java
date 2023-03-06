@@ -1,11 +1,10 @@
 package com.medicalsystem.Medical.service.restcontroller;
 
 import com.medicalsystem.Medical.service.Response;
-import com.medicalsystem.Medical.service.entity.Medicine;
 import com.medicalsystem.Medical.service.entity.Transaction;
-import com.medicalsystem.Medical.service.entity.User;
 import com.medicalsystem.Medical.service.services.ITransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,43 +22,43 @@ public class TransactionRestController {
     }
 
     @RequestMapping(value="/addtransaction",method = RequestMethod.POST)
-    public ResponseEntity addTransaction(@RequestBody Transaction transaction){
-        Response res=transactionService.addTransaction(transaction);
-        return ResponseEntity.status(res.getCode()).body(res.toData());
+    public Response<Transaction> addTransaction(@RequestBody Transaction transaction){
+        Response <Transaction> res=transactionService.addTransaction(transaction);
+        return res;
 
     }
     @RequestMapping(value="/gettransaction/{theid}",method = RequestMethod.GET)
-    public ResponseEntity getTransaction(@PathVariable String theid){
+    public Response<Transaction> getTransaction(@PathVariable String theid){
 
-        Response res=transactionService.getTransaction(theid);
-        return ResponseEntity.status(res.getCode()).body(res.toData());
+        Response <Transaction> res=transactionService.getTransaction(theid);
+        return res;
 
     }
     @RequestMapping(value="/getalltransaction",method = RequestMethod.GET)
-    public ResponseEntity getAllTransaction(){
+    public Response<List<Transaction>> getAllTransaction(){
 
-        Response res=transactionService.getallTransaction();
-        return ResponseEntity.status(res.getCode()).body(res.toData());
+        Response<List<Transaction>> res=transactionService.getallTransaction();
+        return res;
 
 
 
     }
 
     @RequestMapping(value="/deletetransaction/{theid}",method = RequestMethod.DELETE)
-    public ResponseEntity deleteTransaction(@PathVariable String theid){
+    public Response<Transaction> deleteTransaction(@PathVariable String theid){
 
-        Response res=transactionService.deleteTransaction(theid);
-        return ResponseEntity.status(res.getCode()).body(res.toData());
+        Response<Transaction> res=transactionService.deleteTransaction(theid);
+        return res;
 
 
     }
 
 
     @RequestMapping(value= "/updatetransaction/{theid}",method = RequestMethod.PUT)
-    public ResponseEntity updateTransaction(@PathVariable String theid, @RequestBody Transaction transaction){
+    public Response<Transaction> updateTransaction(@PathVariable String theid, @RequestBody Transaction transaction){
 
-        Response res=transactionService.updateTransaction(theid,transaction);
-        return ResponseEntity.status(res.getCode()).body(res.toData());
+        Response<Transaction> res=transactionService.updateTransaction(theid,transaction);
+        return res;
 
     }
 

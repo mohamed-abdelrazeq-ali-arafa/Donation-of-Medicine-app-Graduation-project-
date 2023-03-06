@@ -7,11 +7,11 @@ import java.util.List;
 
 public interface IStockService {
 
-    public Response addStock(Stock stock);
-    public Response deleteStockBId(String id);
-    public Response getStockById (String id);
-    public Response getAllStock();
-    public Response updateStock(String id,Stock stock);
+    public Response<Stock> addStock(Stock stock);
+    public Response<Stock> deleteStockBId(String id);
+    public Response<Stock> getStockById (String id);
+    public Response<List<Stock>> getAllStock();
+    public Response<Stock> updateStock(String id,Stock stock);
 
 
 
