@@ -41,28 +41,28 @@ public class UserRestController {
         Response<User> response=userService.deleteUserById(theid);
         return response;
     }
-//
-//    @RequestMapping(value="/getuser/{theid}",method = RequestMethod.GET)
-//    public ResponseEntity getUser(@PathVariable String theid){
-//
-//        var res=userService.getUserById(theid);
-//        return status(res.getCode()).body(res.toData());
-//
-//    }
-//
-//    @RequestMapping(value="/getalluser",method = RequestMethod.GET)
-//    public ResponseEntity getAllUser(){
-//
-//        var res=userService.getAllUsers();
-//        return status(res.getCode()).body(res.toData());
-//
-//    }
-//
-//    @RequestMapping(value="/updateuser/{theid}",method = RequestMethod.PUT)
-//    public ResponseEntity updateUser(@PathVariable String theid, @RequestBody User user){
-//        var res=userService.updateUser(theid,user);
-//        return status(res.getCode()).body(res.toData());
-//    }
+
+    @RequestMapping(value="/getuser/{theid}",method = RequestMethod.GET)
+    public Response<User> getUser(@PathVariable String theid){
+
+        Response<User> res=userService.getUserById(theid);
+        return res;
+
+    }
+
+    @RequestMapping(value="/getalluser",method = RequestMethod.GET)
+    public Response<List<User>> getAllUser(){
+
+        Response<List<User>> res=userService.getAllUsers();
+        return res;
+
+    }
+
+    @RequestMapping(value="/updateuser/{theid}",method = RequestMethod.PUT)
+    public Response<User> updateUser(@PathVariable String theid, @RequestBody User user){
+        Response<User> res=userService.updateUser(theid,user);
+        return res;
+    }
 
 
 }
