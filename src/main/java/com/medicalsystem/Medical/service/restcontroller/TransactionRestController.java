@@ -62,6 +62,13 @@ public class TransactionRestController {
 
     }
 
+    @RequestMapping(value= "/gettransactionbyuserid",method = RequestMethod.GET)
+    public Response<List<Transaction>> getTransactionByUserId(){
+        Response<List<Transaction>> res=transactionService.getTransactionByUserId();
+        return res;
+
+    }
+
 
 
 }

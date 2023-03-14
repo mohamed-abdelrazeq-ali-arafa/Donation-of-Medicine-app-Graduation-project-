@@ -4,14 +4,18 @@ package com.medicalsystem.Medical.service.Implservices;
 import com.medicalsystem.Medical.service.Response;
 import com.medicalsystem.Medical.service.dao.ITransactionRepository;
 import com.medicalsystem.Medical.service.entity.Transaction;
+import com.medicalsystem.Medical.service.entity.User;
+import com.medicalsystem.Medical.service.restcontroller.BaseController;
 import com.medicalsystem.Medical.service.services.ITransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class TransactionService implements ITransactionService {
+public class TransactionService  extends BaseController implements ITransactionService {
 
     ITransactionRepository transactionRepository;
     @Autowired
@@ -21,8 +25,7 @@ public class TransactionService implements ITransactionService {
 
     @Override
     public Response<Transaction> addTransaction(Transaction transaction) {
-        String userId="640b6231d7d96a4f28cc05ab";
-        transaction.setCreatedBy(userId);
+        transaction.setUserId(getCurrentUser().getId());
         Response<Transaction> res=new Response<Transaction>();
         transactionRepository.save(transaction);
         res.make("Success insert for Transaction",201,transaction);
@@ -79,13 +82,27 @@ public class TransactionService implements ITransactionService {
             tempTransaction.setMyStatusValue(transaction.getMyStatusValue());
             tempTransaction.setCreatedAt(transaction.getCreatedAt());
             tempTransaction.setMedicineId(transaction.getMedicineId());
-            tempTransaction.setCreatedBy(transaction.getCreatedBy());
+            tempTransaction.setUserId(transaction.getUserId());
             transactionRepository.save(tempTransaction);
             res.make("Successfull Update for transaction",200,tempTransaction);
         }
         return res;
 
 
+    }
+
+    @Override
+    public Response<List<Transaction>> getTransactionByUserId() {
+        Response<List<Transaction>> res=new Response<>();
+        List<Transaction> tempTransactions=transactionRepository.findByUserId(getCurrentUser().getId());
+        if(tempTransactions==null)
+        {
+            res.make("Failed to Get   Transaction with this id", 400, tempTransactions);
+        }
+        else {
+           res.make("Sucessfull return",200,tempTransactions);
+        }
+        return res;
     }
 
 }

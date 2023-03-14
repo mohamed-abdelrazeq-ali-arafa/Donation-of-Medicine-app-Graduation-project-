@@ -11,5 +11,7 @@ public interface ITransactionService {
     public Response<Transaction> deleteTransaction(String id);
     public Response<List<Transaction>> getallTransaction();
     public Response<Transaction> updateTransaction(String id,Transaction transaction);
+    public Response<List<Transaction>> getTransactionByUserId();
+
 
 }

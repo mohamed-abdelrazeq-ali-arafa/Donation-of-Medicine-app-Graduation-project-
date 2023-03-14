@@ -4,6 +4,7 @@ import com.medicalsystem.Medical.service.Response;
 import com.medicalsystem.Medical.service.dao.ILogRepository;
 import com.medicalsystem.Medical.service.entity.Log;
 import com.medicalsystem.Medical.service.entity.Transaction;
+import com.medicalsystem.Medical.service.restcontroller.BaseController;
 import com.medicalsystem.Medical.service.services.ILogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class LogService implements ILogService {
+public class LogService  extends BaseController implements ILogService {
     ILogRepository logRepository;
 
     @Autowired
@@ -21,8 +22,7 @@ public class LogService implements ILogService {
 
     @Override
     public Response<Log> addLog(Log log) {
-        String userId="640b6231d7d96a4f28cc05ab";
-        log.setCreatedBy(userId);
+        log.setUserId(getCurrentUser().getId());
         var res=new Response<Log>();
         logRepository.save(log);
         res.make("Success Insert of Log",201,log);
@@ -74,12 +74,23 @@ public class LogService implements ILogService {
             tempLog.setCreatedAt(log.getCreatedAt());
             tempLog.setTitle(log.getTitle());
             tempLog.setDiscreption(log.getDiscreption());
-            tempLog.setCreatedBy(log.getCreatedBy());
+            tempLog.setUserId(log.getUserId());
             logRepository.save(tempLog);
             res.make("Sucess Update of log",200,tempLog);
 
         }
         return res;
 
+    }
+
+    @Override
+    public Response<List<Log>> getLogsByUserId() {
+        Response res=new Response<List<Log>>();
+        List<Log> logs= logRepository.findByUserId(getCurrentUser().getId());
+        if(logs==null)
+            res.make("Failed There is No Log with this id",400,null);
+        else
+           res.make("Sucess retrive of logs",200,logs);
+        return res;
     }
 }

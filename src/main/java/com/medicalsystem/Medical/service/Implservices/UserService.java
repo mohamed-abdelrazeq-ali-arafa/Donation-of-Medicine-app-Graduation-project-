@@ -3,6 +3,7 @@ package com.medicalsystem.Medical.service.Implservices;
 import com.medicalsystem.Medical.service.Response;
 import com.medicalsystem.Medical.service.dao.IUserRepository;
 import com.medicalsystem.Medical.service.entity.User;
+import com.medicalsystem.Medical.service.restcontroller.BaseController;
 import com.medicalsystem.Medical.service.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -18,7 +19,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UserService implements IUserService, UserDetailsService {
+public class UserService extends BaseController implements IUserService, UserDetailsService {
     private IUserRepository userRepository;
 
     @Bean
@@ -27,7 +28,6 @@ public class UserService implements IUserService, UserDetailsService {
     }
     @Override
     public UserDetails loadUserByUsername(String username) {
-         //User user = userRepository.findById("6410735b8691ea7afb964165").orElse(null);
         User user = userRepository.findByEmail(username);
         if (user == null) {
             System.out.println("failed to find this email");
@@ -44,8 +44,6 @@ public class UserService implements IUserService, UserDetailsService {
 
     @Override
     public Response<User> addUser(User user) {
-        String diseaseId="6401323b248e01620a3fb779";
-        user.setDiseaseId(diseaseId);
         user.setPassword(passwordEncoder().encode(user.getPassword()));
         var res=new Response<User>();
         userRepository.save(user);

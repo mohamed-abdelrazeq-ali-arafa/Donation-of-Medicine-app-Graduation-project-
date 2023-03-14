@@ -3,6 +3,7 @@ package com.medicalsystem.Medical.service.restcontroller;
 
 import com.medicalsystem.Medical.service.Response;
 import com.medicalsystem.Medical.service.entity.Log;
+import com.medicalsystem.Medical.service.entity.Transaction;
 import com.medicalsystem.Medical.service.services.ILogService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -50,6 +51,13 @@ public class LogRestController {
     public Response<Log> updatelog(@PathVariable String theid,@RequestBody Log log){
 
         Response<Log> res=logService.updatelog(theid,log);
+        return res;
+
+    }
+
+    @RequestMapping(value= "/getlogbyuserid",method = RequestMethod.GET)
+    public Response<List<Log>> getLogByUserId(){
+        Response<List<Log>> res=logService.getLogsByUserId();
         return res;
 
     }

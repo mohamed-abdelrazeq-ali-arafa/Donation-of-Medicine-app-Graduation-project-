@@ -14,6 +14,7 @@ public interface ILogService {
     public Response<Log> getLog(String id);
     public Response<List<Log>> getAllLog();
     public Response<Log> updatelog(String id, @RequestBody Log log);
+    public Response<List<Log>> getLogsByUserId();
 
 
 }

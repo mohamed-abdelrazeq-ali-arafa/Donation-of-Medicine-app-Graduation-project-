@@ -68,6 +68,7 @@ public class User implements UserDetails {
     };
     private type enumType;
 
+
     private String diseaseId;
 
     public User(String email, String password) {

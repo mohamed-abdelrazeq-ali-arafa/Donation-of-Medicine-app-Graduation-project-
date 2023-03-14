@@ -15,7 +15,7 @@ public class Log {
     private String discreption;
 
     //should hold User id
-    private String createdBy;
+    private String userId;
 
     private Date createdAt;
 

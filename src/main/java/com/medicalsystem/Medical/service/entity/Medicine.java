@@ -13,8 +13,6 @@ public class Medicine {
     @Id
     private String id;
     private String name;
-
-
     private List<String> uses;
     private List<String> sideEffects;
     private List<String> precautions;

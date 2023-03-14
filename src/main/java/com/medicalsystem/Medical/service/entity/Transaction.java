@@ -13,12 +13,13 @@ public class Transaction {
 
     @Id
     private String id;
-    //should hold User idl
-    private String createdBy;
+
+    // hold User id create the transaction
+    private String userId;
 
     private Date createdAt;
 
-    //changed
+
     private String medicineId;
 
     private enum status {
