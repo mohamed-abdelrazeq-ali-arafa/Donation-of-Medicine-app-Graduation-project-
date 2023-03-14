@@ -2,8 +2,9 @@ package com.medicalsystem.Medical.service.Implservices;
 
 import com.medicalsystem.Medical.service.Response;
 import com.medicalsystem.Medical.service.dao.IStockRepository;
+import com.medicalsystem.Medical.service.dao.IUserRepository;
 import com.medicalsystem.Medical.service.entity.Stock;
-import com.medicalsystem.Medical.service.entity.Transaction;
+import com.medicalsystem.Medical.service.entity.User;
 import com.medicalsystem.Medical.service.services.IStockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,12 +15,16 @@ import java.util.Optional;
 @Service
 public class StockService implements IStockService {
     IStockRepository stockRepository;
+    IUserRepository userRepository;
     @Autowired
     public StockService( IStockRepository stockRepository){
         this.stockRepository=stockRepository;
     }
     @Override
     public Response<Stock> addStock(Stock stock) {
+//        String tempUserid="64047b25d8062f7d9dfdac7a";
+//       Optional<User> tempUser= userRepository.findById(tempUserid);
+
         var res=new Response<Stock>();
         stockRepository.save(stock);
         res.make("Success insert for Stock",200,stock);

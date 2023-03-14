@@ -21,6 +21,8 @@ public class TransactionService implements ITransactionService {
 
     @Override
     public Response<Transaction> addTransaction(Transaction transaction) {
+        String userId="640b6231d7d96a4f28cc05ab";
+        transaction.setCreatedBy(userId);
         Response<Transaction> res=new Response<Transaction>();
         transactionRepository.save(transaction);
         res.make("Success insert for Transaction",201,transaction);

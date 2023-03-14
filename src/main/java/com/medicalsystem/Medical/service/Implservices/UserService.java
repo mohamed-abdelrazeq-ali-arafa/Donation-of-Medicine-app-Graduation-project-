@@ -2,19 +2,39 @@ package com.medicalsystem.Medical.service.Implservices;
 
 import com.medicalsystem.Medical.service.Response;
 import com.medicalsystem.Medical.service.dao.IUserRepository;
-import com.medicalsystem.Medical.service.entity.Transaction;
 import com.medicalsystem.Medical.service.entity.User;
 import com.medicalsystem.Medical.service.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UserService implements IUserService {
+public class UserService implements IUserService, UserDetailsService {
     private IUserRepository userRepository;
+
+    @Bean
+    private PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+    @Override
+    public UserDetails loadUserByUsername(String username) {
+         //User user = userRepository.findById("6410735b8691ea7afb964165").orElse(null);
+        User user = userRepository.findByEmail(username);
+        if (user == null) {
+            System.out.println("failed to find this email");
+        }
+
+        return user;
+    }
 
     @Autowired
     public UserService(IUserRepository userRepository){
@@ -22,9 +42,11 @@ public class UserService implements IUserService {
         this.userRepository=userRepository;
     }
 
-
     @Override
     public Response<User> addUser(User user) {
+        String diseaseId="6401323b248e01620a3fb779";
+        user.setDiseaseId(diseaseId);
+        user.setPassword(passwordEncoder().encode(user.getPassword()));
         var res=new Response<User>();
         userRepository.save(user);
         res.sucess(user);
@@ -79,7 +101,7 @@ public class UserService implements IUserService {
             tempUser.setPhone(user.getPhone());
             tempUser.setGovernorate(user.getGovernorate());
             tempUser.setEmail(user.getEmail());
-            tempUser.setUserName(user.getUserName());
+            //tempUser.setUsername(user.getUsername());
             tempUser.setCity(user.getCity());
             tempUser.setDiseaseId(user.getDiseaseId());
             tempUser.setPassword(user.getPassword());
@@ -93,9 +115,6 @@ public class UserService implements IUserService {
 
         return res;
     }
-
-
-
 
 
 }

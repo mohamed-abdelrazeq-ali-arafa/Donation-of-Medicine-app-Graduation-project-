@@ -3,11 +3,11 @@ package com.medicalsystem.Medical.service.Implservices;
 import com.medicalsystem.Medical.service.Response;
 import com.medicalsystem.Medical.service.dao.IMedicineRepository;
 import com.medicalsystem.Medical.service.entity.Medicine;
-import com.medicalsystem.Medical.service.entity.Stock;
 import com.medicalsystem.Medical.service.services.IMedicineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -22,6 +22,10 @@ public class MedicineService implements IMedicineService {
 
     @Override
     public Response<Medicine> addMedicine(Medicine medicine) {
+        List<String> diseaseList=new ArrayList<String>();
+        diseaseList.add("hello");
+        diseaseList.add("bye");
+        medicine.setDiseasesID(diseaseList);
         var res=new Response();
         medicineRepository.save(medicine);
         res.make("Success insert for Medicine",200,medicine);
@@ -73,13 +77,15 @@ public class MedicineService implements IMedicineService {
     public Response<Medicine>  updateMedicine(String id, Medicine medicine) {
         var res=new Response();
         Medicine tempMedicine=medicineRepository.findById(id).orElse(null);
+        List<String> tempMedicineId=tempMedicine.getDiseasesID();
+        tempMedicineId.addAll(medicine.getDiseasesID());
         if(tempMedicine==null)
             res.make("Failed to Update for Medicine id is not found", 400, tempMedicine);
         else {
             tempMedicine.setName(medicine.getName());
             tempMedicine.setAdditionalInformation(medicine.getAdditionalInformation());
             tempMedicine.setPrecautions(medicine.getPrecautions());
-            tempMedicine.setDiseasesID(medicine.getDiseasesID());
+            tempMedicine.setDiseasesID(tempMedicineId);
             tempMedicine.setOverDos(medicine.getOverDos());
             tempMedicine.setSideEffects(medicine.getSideEffects());
             tempMedicine.setUses(medicine.getUses());

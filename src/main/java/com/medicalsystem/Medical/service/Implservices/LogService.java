@@ -21,6 +21,8 @@ public class LogService implements ILogService {
 
     @Override
     public Response<Log> addLog(Log log) {
+        String userId="640b6231d7d96a4f28cc05ab";
+        log.setCreatedBy(userId);
         var res=new Response<Log>();
         logRepository.save(log);
         res.make("Success Insert of Log",201,log);
