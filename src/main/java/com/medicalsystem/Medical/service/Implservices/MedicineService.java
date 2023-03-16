@@ -22,6 +22,7 @@ public class MedicineService implements IMedicineService {
 
     @Override
     public Response<Medicine> addMedicine(Medicine medicine) {
+        //create stock with each medicine addd and update quantity
         List<String> diseaseList=new ArrayList<String>();
         diseaseList.add("hello");
         diseaseList.add("bye");

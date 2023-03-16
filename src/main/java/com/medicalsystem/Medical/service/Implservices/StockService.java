@@ -22,9 +22,6 @@ public class StockService implements IStockService {
     }
     @Override
     public Response<Stock> addStock(Stock stock) {
-//        String tempUserid="64047b25d8062f7d9dfdac7a";
-//       Optional<User> tempUser= userRepository.findById(tempUserid);
-
         var res=new Response<Stock>();
         stockRepository.save(stock);
         res.make("Success insert for Stock",200,stock);

@@ -20,6 +20,7 @@ public class Transaction {
     private Date createdAt;
 
 
+    //medicine has been donated
     private String medicineId;
 
     private enum status {
