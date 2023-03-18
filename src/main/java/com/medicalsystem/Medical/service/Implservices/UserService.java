@@ -26,7 +26,6 @@ public class UserService extends BaseController implements IUserService, UserDet
     private PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
     @Override
     public UserDetails loadUserByUsername(String username) {
         User user = userRepository.findByEmail(username);
@@ -38,48 +37,81 @@ public class UserService extends BaseController implements IUserService, UserDet
     }
 
     @Autowired
-    public UserService(IUserRepository userRepository) {
+    public UserService(IUserRepository userRepository){
 
-        this.userRepository = userRepository;
+        this.userRepository=userRepository;
     }
 
     @Override
-    public Response<User> add(User user) {
+    public Response<User> addUser(User user) {
         user.setPassword(passwordEncoder().encode(user.getPassword()));
+        var res=new Response<User>();
         userRepository.save(user);
-        return Response.success(user);
+        res.sucess(user);
+        return  res;
+
     }
 
     @Override
-    public Response<User> delete(String id) {
+    public Response<User> deleteUserById(String id) {
+        var res = new Response<User>();
         User result = userRepository.findById(id).orElse(null);
-        if (result == null)
-            return Response.failed("User not found");
-        userRepository.deleteById(id);
-        return Response.success(result);
+        if (result == null) {
+            res.make("Failed to delete", 400, result);
+        }
+        else {
+            userRepository.deleteById(id);
+            res.make("Success Deletion", 201, result);
+        }
+        return res;
     }
 
     @Override
-    public Response<User> getById(String id) {
+    public Response<User> getUserById(String id) {
+        var res=new Response<User>();
         User result = userRepository.findById(id).orElse(null);
-        if (result == null)
-            return Response.failed("User not found");
-        return Response.success(result);
+        if(result==null)
+        {
+            res.make("Failed to retrive", 400, result);
+        }
+        else {
+            res.make("Success Retrive", 201, result);
+        }
+        return res;
+
     }
 
     @Override
     public Response<List<User>> getAllUsers() {
-        List<User> users = userRepository.findAll();
-        return Response.success(users);
+        var res=new Response<List<User>>();
+        List<User>users=userRepository.findAll();
+        res.make("Success Retrive", 201, users);
+        return res;
     }
 
     @Override
-    public Response<User> updateUser(User user) {
-        User savedUser = userRepository.findById(user.getId()).orElse(null);
-        if (savedUser == null)
-            return Response.failed("User not found");
-        userRepository.save(user);
-        return Response.success(user);
+    public Response<User> updateUser(String id, User user) {
+        var res=new Response<User>();
+        User tempUser=userRepository.findById(id).orElse(null);
+        if(tempUser==null)
+            res.make("Failed to Update", 400, tempUser);
+        else {
+            tempUser.setPhone(user.getPhone());
+            tempUser.setGovernorate(user.getGovernorate());
+            tempUser.setEmail(user.getEmail());
+            //tempUser.setUsername(user.getUsername());
+            tempUser.setCity(user.getCity());
+            tempUser.setDiseaseId(user.getDiseaseId());
+            tempUser.setPassword(user.getPassword());
+            tempUser.setGender(user.getGender());
+            tempUser.setEnumType(user.getEnumType());
+            tempUser.setAddress(user.getAddress());
+            userRepository.save(tempUser);
+            res.make("Success Update", 201, tempUser);
+        }
+
+
+        return res;
     }
 
 
