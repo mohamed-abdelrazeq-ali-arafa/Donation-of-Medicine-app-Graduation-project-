@@ -13,6 +13,8 @@ public interface IDiseaseService {
 
     public Response<Disease> getDiseasById(String id);
 
+    public Response<Disease> getDiseasByName(String name);
+
     public Response<List<Disease>> getAllDisease();
 
     public Response<Disease> deleteDiseaseById(String id);

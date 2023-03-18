@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface IDiseaseRepository extends MongoRepository <Disease,String> {
+    Disease findByName(String name);
 }

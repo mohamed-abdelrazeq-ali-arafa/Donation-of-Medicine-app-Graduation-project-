@@ -1,6 +1,9 @@
 package com.medicalsystem.Medical.service.restcontroller;
 
+import com.medicalsystem.Medical.service.Implservices.DiseaseService;
 import com.medicalsystem.Medical.service.entity.Disease;
+import com.medicalsystem.Medical.service.services.IDiseaseService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,6 +17,9 @@ import java.util.List;
 @RequestMapping("api/users/model")
 public class ModelRestController {
     private final List<String> symptoms = new ArrayList<>();
+
+    @Autowired
+    DiseaseRestController diseaseRestController;
 
     public ModelRestController() {
         addSymptomsToList(symptoms);
@@ -60,20 +66,28 @@ public class ModelRestController {
 
     @RequestMapping(value = "/predict", method = RequestMethod.POST)
     public Disease getDisease(@RequestParam("symptoms") String SymptomsEncoded) throws IOException {
-        var process = Runtime.getRuntime().exec("python /home/mohamed/PycharmProjects/MedicalServicePredictionModel/test.py " + SymptomsEncoded);
+        var process = Runtime.getRuntime().exec("python C:\\Users\\mohamed\\Desktop\\MedicalServicePredictionModel\\test.py " + SymptomsEncoded);
         try {
             process.waitFor();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream("/home/mohamed/PycharmProjects/MedicalServicePredictionModel/prediction.txt")));
-        String line = reader.readLine();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream("C:\\Users\\mohamed\\Desktop\\MedicalServicePredictionModel\\prediction.txt")));
+        String diseaseName = reader.readLine();
         reader.close();
 
-        //todo: get disease from database
+        //todo: search for disease name in disease table if found return it , run script passed
         Disease disease = new Disease();
-        disease.setName(line);
-        return disease;
+        if(  diseaseRestController.getDiseaseByName(diseaseName).getData()==null)
+            return null;
+        else
+            disease.setName(diseaseName);
+
+        return diseaseRestController.getDiseaseByName(diseaseName).getData();
+
+
+
+
     }
 
 }

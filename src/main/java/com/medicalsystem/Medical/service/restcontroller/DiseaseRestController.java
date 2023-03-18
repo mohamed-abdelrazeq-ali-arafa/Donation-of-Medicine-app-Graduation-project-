@@ -34,6 +34,12 @@ public class DiseaseRestController {
         return res;
     }
 
+    @RequestMapping(value="/getdiseasebyname",method = RequestMethod.GET)
+    public Response<Disease> getDiseaseByName(String name){
+        Response<Disease> res=diseaseService.getDiseasByName(name);
+        return res;
+    }
+
 
     @RequestMapping(value="/getalldisease",method = RequestMethod.GET)
     public Response<List<Disease>> getAllDisease(){

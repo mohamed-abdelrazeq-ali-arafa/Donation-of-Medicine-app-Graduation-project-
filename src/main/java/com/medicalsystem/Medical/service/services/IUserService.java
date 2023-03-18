@@ -17,9 +17,4 @@ public interface IUserService {
     public Response<User> updateUser(String id,User user);
 
 
-
-
-
-
-
 }

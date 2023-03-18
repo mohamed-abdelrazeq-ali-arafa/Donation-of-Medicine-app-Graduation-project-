@@ -41,6 +41,14 @@ public class DiseaseService implements IDiseaseService {
     }
 
     @Override
+    public Response<Disease> getDiseasByName(String name) {
+        var res=new Response();
+        Disease disease= diseaseRepository.findByName(name);
+        res.make("Sucess retrive of disease",200,disease);
+        return res;
+    }
+
+    @Override
     public Response<List<Disease>> getAllDisease() {
         var res=new Response();
         List<Disease> diseases= diseaseRepository.findAll();

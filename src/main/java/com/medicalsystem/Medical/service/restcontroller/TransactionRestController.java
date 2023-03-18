@@ -46,10 +46,8 @@ public class TransactionRestController {
 
     @RequestMapping(value="/deletetransaction/{theid}",method = RequestMethod.DELETE)
     public Response<Transaction> deleteTransaction(@PathVariable String theid){
-
         Response<Transaction> res=transactionService.deleteTransaction(theid);
         return res;
-
 
     }
 
