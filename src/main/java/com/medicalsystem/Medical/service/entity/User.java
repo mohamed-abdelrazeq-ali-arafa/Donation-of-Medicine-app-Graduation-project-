@@ -20,11 +20,16 @@ public class User implements UserDetails {
     private String email;
     private String password;
     private String phone;
-   // private String username;
-    private String gender;
-    private String Governorate;
-    private String city;
-    private String address;
+    private String username;
+    private Location location;
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -76,3 +81,4 @@ public class User implements UserDetails {
         this.password = password;
     }
 }
+

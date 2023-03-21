@@ -97,15 +97,11 @@ public class UserService extends BaseController implements IUserService, UserDet
             res.make("Failed to Update", 400, tempUser);
         else {
             tempUser.setPhone(user.getPhone());
-            tempUser.setGovernorate(user.getGovernorate());
             tempUser.setEmail(user.getEmail());
             //tempUser.setUsername(user.getUsername());
-            tempUser.setCity(user.getCity());
             tempUser.setDiseaseId(user.getDiseaseId());
             tempUser.setPassword(user.getPassword());
-            tempUser.setGender(user.getGender());
             tempUser.setEnumType(user.getEnumType());
-            tempUser.setAddress(user.getAddress());
             userRepository.save(tempUser);
             res.make("Success Update", 201, tempUser);
         }

@@ -17,7 +17,7 @@ import java.util.Optional;
 
 import static org.springframework.http.ResponseEntity.status;
 
-//@RestController
+@RestController
 @RequestMapping("/api/users")
 public class UserRestController {
 

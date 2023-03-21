@@ -1,9 +1,7 @@
 package com.medicalsystem.Medical.service.restcontroller;
 
-import com.medicalsystem.Medical.service.Implservices.DiseaseService;
 import com.medicalsystem.Medical.service.entity.Disease;
 import com.medicalsystem.Medical.service.services.IDiseaseService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,13 +14,13 @@ import java.util.List;
 @RestController
 @RequestMapping("api/users/model")
 public class ModelRestController {
+    private IDiseaseService diseaseService;
     private final List<String> symptoms = new ArrayList<>();
 
-    @Autowired
-    DiseaseRestController diseaseRestController;
-
-    public ModelRestController() {
+    public ModelRestController(IDiseaseService diseaseService) {
         addSymptomsToList(symptoms);
+        this.diseaseService = diseaseService;
+
     }
 
     @RequestMapping(value = "/symptoms", method = RequestMethod.GET)
@@ -65,29 +63,29 @@ public class ModelRestController {
     }
 
     @RequestMapping(value = "/predict", method = RequestMethod.POST)
-    public Disease getDisease(@RequestParam("symptoms") String SymptomsEncoded) throws IOException {
-        var process = Runtime.getRuntime().exec("python C:\\Users\\mohamed\\Desktop\\MedicalServicePredictionModel\\test.py " + SymptomsEncoded);
-        try {
-            process.waitFor();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream("C:\\Users\\mohamed\\Desktop\\MedicalServicePredictionModel\\prediction.txt")));
+    public Disease getDisease(@RequestParam("symptoms") String symptomsEncoded) throws IOException, InterruptedException {
+        String workingDirectory = "/home/mohamed/PycharmProjects/MedicalServicePredictionModel";
+        var process = new ProcessBuilder("python", "test.py", symptomsEncoded)
+                .directory(new File(workingDirectory))
+                .start();
+        process.waitFor();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(workingDirectory + "/prediction.txt")));
         String diseaseName = reader.readLine();
         reader.close();
 
-        //todo: search for disease name in disease table if found return it , run script passed
-        Disease disease = new Disease();
-        if(  diseaseRestController.getDiseaseByName(diseaseName).getData()==null)
-            return null;
-        else
-            disease.setName(diseaseName);
-
-        return diseaseRestController.getDiseaseByName(diseaseName).getData();
-
-
-
-
+//        var diseaseResponse = diseaseService.findDiseaseByName(diseaseName);
+//        if (diseaseResponse.isSuccess())
+//            return diseaseResponse.getData();
+//        else {
+            process = new ProcessBuilder("python", "DiseaseManagerBSoup.py", diseaseName)
+                    .directory(new File("/home/mohamed/PycharmProjects/medicineWebScrap/"))
+                    .start();
+            process.waitFor();
+//        }
+//        diseaseResponse = diseaseService.findDiseaseByName(diseaseName);
+//        if (diseaseResponse.isSuccess())
+//            return diseaseResponse.getData();
+        return new Disease();
     }
 
 }
