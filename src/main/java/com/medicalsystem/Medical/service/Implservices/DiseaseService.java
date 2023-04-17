@@ -27,7 +27,7 @@ public class DiseaseService implements IDiseaseService {
     }
 
     @Override
-    public Response<Disease> getDiseasById(String id) {
+    public Response<Disease> getDiseaseById(String id) {
         var res = new Response();
         Disease tempDisease = diseaseRepository.findById(id).orElse(null);
         if (tempDisease == null)
@@ -40,7 +40,7 @@ public class DiseaseService implements IDiseaseService {
     }
 
     @Override
-    public Response<Disease> getDiseasByName(String name) {
+    public Response<Disease> getDiseaseByName(String name) {
         var res=new Response();
         Disease disease= diseaseRepository.findByName(name);
         res.make("Sucess retrive of disease",200,disease);

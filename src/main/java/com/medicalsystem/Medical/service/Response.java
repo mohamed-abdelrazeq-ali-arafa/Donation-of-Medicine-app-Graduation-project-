@@ -7,22 +7,18 @@ public class Response <t> {
 
     private t data;
     String error ;
-
     private boolean isSuccess;
-
 
     public t getData() {
         return data;
     }
-
-
     public String getArr() {
         return error;
     }
-
     public boolean isSuccess() {
         return isSuccess;
     }
+
 
     public  void  sucess(t data){
         this.data=data;

@@ -6,6 +6,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.OneToMany;
 import java.util.Collection;
@@ -22,6 +23,10 @@ public class User implements UserDetails {
     private String phone;
     private String username;
     private Location location;
+
+
+
+
 
     public Location getLocation() {
         return location;

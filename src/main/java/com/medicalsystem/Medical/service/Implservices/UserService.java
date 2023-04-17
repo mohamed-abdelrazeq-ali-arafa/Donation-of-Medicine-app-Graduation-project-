@@ -20,6 +20,7 @@ import java.util.Optional;
 
 @Service
 public class UserService extends BaseController implements IUserService, UserDetailsService {
+
     private IUserRepository userRepository;
 
     @Bean
@@ -47,7 +48,7 @@ public class UserService extends BaseController implements IUserService, UserDet
         user.setPassword(passwordEncoder().encode(user.getPassword()));
         var res=new Response<User>();
         userRepository.save(user);
-        res.sucess(user);
+        res.make("Success Insertion", 201, user);
         return  res;
 
     }

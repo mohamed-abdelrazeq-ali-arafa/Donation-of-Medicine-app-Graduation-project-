@@ -64,7 +64,7 @@ public class ModelRestController {
 
     @RequestMapping(value = "/predict", method = RequestMethod.POST)
     public Disease getDisease(@RequestParam("symptoms") String symptomsEncoded) throws IOException, InterruptedException {
-        String workingDirectory = "/home/mohamed/PycharmProjects/MedicalServicePredictionModel";
+        String workingDirectory = "C:\\Users\\mohamed\\Desktop\\MedicalServicePredictionModel";
         var process = new ProcessBuilder("python", "test.py", symptomsEncoded)
                 .directory(new File(workingDirectory))
                 .start();
@@ -72,6 +72,8 @@ public class ModelRestController {
         BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(workingDirectory + "/prediction.txt")));
         String diseaseName = reader.readLine();
         reader.close();
+
+        System.out.println(diseaseName);
 
 //        var diseaseResponse = diseaseService.findDiseaseByName(diseaseName);
 //        if (diseaseResponse.isSuccess())

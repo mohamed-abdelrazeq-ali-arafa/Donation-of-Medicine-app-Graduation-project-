@@ -11,9 +11,9 @@ public interface IDiseaseService {
 
     public Response<Disease> addDisease(Disease disease);
 
-    public Response<Disease> getDiseasById(String id);
+    public Response<Disease> getDiseaseById(String id);
 
-    public Response<Disease> getDiseasByName(String name);
+    public Response<Disease> getDiseaseByName(String name);
 
     public Response<List<Disease>> getAllDisease();
 

@@ -14,9 +14,8 @@ import java.util.List;
 @RequestMapping("/api/disease")
 public class DiseaseRestController {
 
-    IDiseaseService diseaseService;
-
     @Autowired
+    IDiseaseService diseaseService;
 
     public DiseaseRestController(IDiseaseService diseaseService) {
 
@@ -25,18 +24,19 @@ public class DiseaseRestController {
     @RequestMapping(value="/adddisease",method = RequestMethod.POST)
     public Response<Disease> addDisease(@RequestBody  Disease disease){
         Response<Disease> res=diseaseService.addDisease(disease);
+        System.out.println(res.getData().getName());
         return res;
     }
 
     @RequestMapping(value="/getdisease/{theid}",method = RequestMethod.GET)
     public Response<Disease> getDisease(@PathVariable String theid){
-        Response<Disease> res=diseaseService.getDiseasById(theid);
+        Response<Disease> res=diseaseService.getDiseaseById(theid);
         return res;
     }
 
     @RequestMapping(value="/getdiseasebyname",method = RequestMethod.GET)
     public Response<Disease> getDiseaseByName(String name){
-        Response<Disease> res=diseaseService.getDiseasByName(name);
+        Response<Disease> res=diseaseService.getDiseaseByName(name);
         return res;
     }
 
