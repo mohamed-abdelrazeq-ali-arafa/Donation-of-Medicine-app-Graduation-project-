@@ -74,19 +74,19 @@ public class ModelRestController {
         reader.close();
 
         System.out.println(diseaseName);
-
-//        var diseaseResponse = diseaseService.findDiseaseByName(diseaseName);
-//        if (diseaseResponse.isSuccess())
-//            return diseaseResponse.getData();
-//        else {
+        //todo this function throws an error
+        var diseaseResponse = diseaseService.findDiseaseByName(diseaseName);
+        if (diseaseResponse.isSuccess())
+            return diseaseResponse.getData(); //todo create request for doctor
+        else {
             process = new ProcessBuilder("python", "DiseaseManagerBSoup.py", diseaseName)
                     .directory(new File("/home/mohamed/PycharmProjects/medicineWebScrap/"))
                     .start();
             process.waitFor();
-//        }
-//        diseaseResponse = diseaseService.findDiseaseByName(diseaseName);
-//        if (diseaseResponse.isSuccess())
-//            return diseaseResponse.getData();
+        }
+        diseaseResponse = diseaseService.findDiseaseByName(diseaseName);
+        if (diseaseResponse.isSuccess())
+            return diseaseResponse.getData();
         return new Disease();
     }
 
