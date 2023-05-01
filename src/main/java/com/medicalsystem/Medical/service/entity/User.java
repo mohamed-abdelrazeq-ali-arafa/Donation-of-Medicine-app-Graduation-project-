@@ -74,12 +74,16 @@ public class User implements UserDetails {
 
     private enum type{
         DONATOR,
-        USER;
+        USER,
+        Doctor;
     };
     private type enumType;
 
 
     private String diseaseId;
+
+
+    private DoctorRequest doctorRequest;
 
     public User(String email, String password) {
         this.email = email;

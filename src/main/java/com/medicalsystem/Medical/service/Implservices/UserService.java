@@ -23,6 +23,7 @@ public class UserService extends BaseController implements IUserService, UserDet
 
     private IUserRepository userRepository;
 
+
     @Bean
     private PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -110,6 +111,7 @@ public class UserService extends BaseController implements IUserService, UserDet
 
         return res;
     }
+
 
 
 }
