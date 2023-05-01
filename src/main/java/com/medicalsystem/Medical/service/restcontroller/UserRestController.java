@@ -2,6 +2,7 @@ package com.medicalsystem.Medical.service.restcontroller;
 
 
 import com.medicalsystem.Medical.service.Response;
+import com.medicalsystem.Medical.service.entity.DoctorRequest;
 import com.medicalsystem.Medical.service.entity.User;
 import com.medicalsystem.Medical.service.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,9 @@ public class UserRestController {
         this.userService=userService;
     }
 
+
+
+
     @RequestMapping(value="/adduser",method = RequestMethod.POST)
     public Response<User> addUser(@RequestBody User user){
         Response<User> response=userService.addUser(user);
@@ -49,6 +53,8 @@ public class UserRestController {
         return res;
 
     }
+
+
 
     @RequestMapping(value="/getalluser",method = RequestMethod.GET)
     public Response<List<User>> getAllUser(){

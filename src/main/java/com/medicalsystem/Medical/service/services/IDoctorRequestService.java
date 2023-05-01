@@ -13,8 +13,10 @@ public interface IDoctorRequestService {
     Response<DoctorRequest> addDoctorRequest(DoctorRequest doctorRequest);
     Response<DoctorRequest> deleteDoctorRequest(String id);
     Response<DoctorRequest> updateDoctorRequest(String id,DoctorRequest doctorRequest);
-    Response<DoctorRequest> getDoctorRequest(String id);
+    Response<DoctorRequest> getDoctorRequest();
     Response<List<DoctorRequest>> getAllDoctorRequests();
+
+
 
 
 }

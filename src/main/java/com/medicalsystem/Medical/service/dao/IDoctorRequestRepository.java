@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface IDoctorRequestRepository extends MongoRepository<DoctorRequest,String> {
+    DoctorRequest findByUserId(String id);
 }

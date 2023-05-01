@@ -9,7 +9,9 @@ import com.medicalsystem.Medical.service.services.IDoctorRequestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.print.Doc;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DoctorRequestService extends BaseController implements IDoctorRequestService  {
@@ -61,9 +63,10 @@ public class DoctorRequestService extends BaseController implements IDoctorReque
     }
 
     @Override
-    public Response<DoctorRequest> getDoctorRequest(String id) {
+    public Response<DoctorRequest> getDoctorRequest() {
         var res = new Response();
-        DoctorRequest tempDoctorRequest = doctorRequestRepository.findById(id).orElse(null);
+        String id= getCurrentUser().getId();
+        DoctorRequest tempDoctorRequest = doctorRequestRepository.findByUserId(id);
         if (tempDoctorRequest == null)
             res.make("Failed Retrive of Doctor Request  with this id ", 400, null);
         else {
@@ -85,6 +88,8 @@ public class DoctorRequestService extends BaseController implements IDoctorReque
         }
         return res;
     }
+
+
 
 
 }

@@ -2,26 +2,27 @@ package com.medicalsystem.Medical.service.Implservices;
 
 import com.medicalsystem.Medical.service.Response;
 import com.medicalsystem.Medical.service.dao.IUserRepository;
+import com.medicalsystem.Medical.service.entity.DoctorRequest;
 import com.medicalsystem.Medical.service.entity.User;
 import com.medicalsystem.Medical.service.restcontroller.BaseController;
+import com.medicalsystem.Medical.service.services.IDoctorRequestService;
 import com.medicalsystem.Medical.service.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserService extends BaseController implements IUserService, UserDetailsService {
 
     private IUserRepository userRepository;
+
+
 
 
     @Bean
@@ -111,6 +112,7 @@ public class UserService extends BaseController implements IUserService, UserDet
 
         return res;
     }
+
 
 
 
