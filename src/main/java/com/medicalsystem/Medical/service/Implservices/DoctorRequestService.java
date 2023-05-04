@@ -9,9 +9,7 @@ import com.medicalsystem.Medical.service.services.IDoctorRequestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.print.Doc;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class DoctorRequestService extends BaseController implements IDoctorRequestService  {

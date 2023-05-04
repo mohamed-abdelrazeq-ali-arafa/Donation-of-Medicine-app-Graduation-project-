@@ -2,10 +2,8 @@ package com.medicalsystem.Medical.service.restcontroller;
 
 import com.medicalsystem.Medical.service.Response;
 import com.medicalsystem.Medical.service.entity.Disease;
-import com.medicalsystem.Medical.service.entity.Medicine;
 import com.medicalsystem.Medical.service.services.IDiseaseService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
