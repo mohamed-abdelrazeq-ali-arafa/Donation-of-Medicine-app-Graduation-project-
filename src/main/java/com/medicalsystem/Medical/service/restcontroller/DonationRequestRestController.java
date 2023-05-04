@@ -23,33 +23,33 @@ public class DonationRequestRestController {
         this.donationRequestService =diseaseService;
     }
     @RequestMapping(value= "/adddonationrequest",method = RequestMethod.POST)
-    public Response<DonationRequest> addDisease(@RequestBody DonationRequest donationRequest){
+    public Response<DonationRequest> addDonationRequest(@RequestBody DonationRequest donationRequest){
         Response<DonationRequest> res= donationRequestService.addDonationRequest(donationRequest);
         return res;
     }
 
     @RequestMapping(value="/getdonationrequest/{theid}",method = RequestMethod.GET)
-    public Response<DonationRequest> getDisease(@PathVariable String theid){
+    public Response<DonationRequest> getDonationRequest(@PathVariable String theid){
         Response<DonationRequest> res= donationRequestService.getDonationRequest(theid);
         return res;
     }
 
 
     @RequestMapping(value="/getalldonationrequest",method = RequestMethod.GET)
-    public Response<List<DonationRequest>> getAllDisease(){
+    public Response<List<DonationRequest>> getAllDonationRequest(){
         Response<List<DonationRequest>> res= donationRequestService.getAllDonationRequest();
         return res;
     }
 
 
     @RequestMapping(value="/deletedonationrequest/{theid}",method = RequestMethod.DELETE)
-    public Response<DonationRequest> deleteDiseaseById(@PathVariable String theid){
+    public Response<DonationRequest> deleteDonationRequestById(@PathVariable String theid){
         Response<DonationRequest> res= donationRequestService.deleteDonationRequest(theid);
         return res;
     }
 
     @RequestMapping(value= "/updatedonationrequest/{theid}",method = RequestMethod.PUT)
-    public Response<DonationRequest> updateMedicine(@PathVariable String theid, @RequestBody DonationRequest donationRequest){
+    public Response<DonationRequest> updateDonationRequest(@PathVariable String theid, @RequestBody DonationRequest donationRequest){
         Response<DonationRequest> res= donationRequestService.updateDonationRequest(theid,donationRequest);
         return res;
 
