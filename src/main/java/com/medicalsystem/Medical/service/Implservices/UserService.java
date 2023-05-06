@@ -35,7 +35,6 @@ public class UserService extends BaseController implements IUserService, UserDet
         if (user == null) {
             System.out.println("failed to find this email");
         }
-
         return user;
     }
 
@@ -49,8 +48,13 @@ public class UserService extends BaseController implements IUserService, UserDet
     public Response<User> addUser(User user) {
         user.setPassword(passwordEncoder().encode(user.getPassword()));
         var res=new Response<User>();
-        userRepository.save(user);
-        res.make("Success Insertion", 201, user);
+        User temp=userRepository.findByEmail(user.getEmail());
+        if(temp!=null)
+            res.make("There is Email with this Name",400,temp);
+        else {
+            userRepository.save(user);
+            res.make("Success Insertion", 201, user);
+        }
         return  res;
 
     }
