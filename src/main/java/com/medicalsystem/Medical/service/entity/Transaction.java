@@ -17,7 +17,7 @@ public class Transaction {
     // hold User id create the transaction
     private String userId;
 
-    private Date createdAt;
+    private Long createdAt;
 
 
     //medicine has been donated
@@ -28,6 +28,7 @@ public class Transaction {
         DONE,
         REJECTED
     }
+
     private status myStatusValue;
     private String receiverId;
     private String senderId;
