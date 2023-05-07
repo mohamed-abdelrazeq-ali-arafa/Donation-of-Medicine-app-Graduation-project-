@@ -33,8 +33,8 @@ public class DiseaseRestController {
     }
 
     @RequestMapping(value="/getdiseasebyname",method = RequestMethod.GET)
-    public Response<Disease> getDiseaseByName(String name){
-        Response<Disease> res=diseaseService.getDiseaseByName(name);
+    public Response<Disease> getDiseaseByName(@PathVariable String name){
+        Response<Disease> res=diseaseService.findDiseaseByName(name);
         return res;
     }
 

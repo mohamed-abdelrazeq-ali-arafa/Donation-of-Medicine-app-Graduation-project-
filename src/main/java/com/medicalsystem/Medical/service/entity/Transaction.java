@@ -29,6 +29,12 @@ public class Transaction {
         REJECTED
     }
     private status myStatusValue;
+    private String receiverId;
+    private String senderId;
+    private String receiverName;
+    private String senderName;
+    private int quantity;
+    private String donationRequestId;
 
 
 }

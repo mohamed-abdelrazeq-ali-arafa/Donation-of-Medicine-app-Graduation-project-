@@ -3,6 +3,7 @@ package com.medicalsystem.Medical.service.security;
 public class JwtResponse {
 
     private String token;
+    private String status;
 
     public JwtResponse(String token) {
         this.token = token;

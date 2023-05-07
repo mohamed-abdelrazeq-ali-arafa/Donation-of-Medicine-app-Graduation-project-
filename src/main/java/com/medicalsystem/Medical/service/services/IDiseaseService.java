@@ -11,8 +11,6 @@ public interface IDiseaseService {
 
     public Response<Disease> getDiseaseById(String id);
 
-    public Response<Disease> getDiseaseByName(String name);
-
     public Response<List<Disease>> getAllDisease();
 
     public Response<Disease> deleteDiseaseById(String id);
