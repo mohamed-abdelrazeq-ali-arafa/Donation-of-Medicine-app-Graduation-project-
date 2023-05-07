@@ -21,8 +21,13 @@ public class DiseaseService implements IDiseaseService {
     @Override
     public Response<Disease> addDisease(Disease disease) {
         var res = new Response();
-        diseaseRepository.save(disease);
-        res.make("Success Insert of Disease", 201, disease);
+        Disease temp=diseaseRepository.findByName(disease.getName());
+        if(temp!=null)
+            res.make("There is disease with this Name",400,temp);
+        else {
+            diseaseRepository.save(disease);
+            res.make("Success Insertion", 201, disease);
+        }
         return res;
     }
 
@@ -84,9 +89,10 @@ public class DiseaseService implements IDiseaseService {
     }
 
     @Override
-    public Response<Disease> findDiseaseByName(String name) {
+    public Response<Disease> findDiseaseByName(String Name) {
         var res = new Response();
-        Disease disease = diseaseRepository.findByName(name);
+        Disease disease = diseaseRepository.findByName(Name);
+        System.out.println(disease);
         if (disease == null)
             res.make("Failed There is No Disease with this name", 400, null);
         else {

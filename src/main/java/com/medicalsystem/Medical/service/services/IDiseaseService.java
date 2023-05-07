@@ -17,7 +17,7 @@ public interface IDiseaseService {
 
     public Response<Disease> updateDisease(String id,Disease disease);
 
-    public Response<Disease> findDiseaseByName(String name);
+    public Response<Disease> findDiseaseByName(String Name);
 
 
 }

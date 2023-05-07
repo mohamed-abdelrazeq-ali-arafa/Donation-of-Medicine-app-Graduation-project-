@@ -22,7 +22,6 @@ public class DiseaseRestController {
     @RequestMapping(value="/adddisease",method = RequestMethod.POST)
     public Response<Disease> addDisease(@RequestBody  Disease disease){
         Response<Disease> res=diseaseService.addDisease(disease);
-        System.out.println(res.getData().getName());
         return res;
     }
 
@@ -32,9 +31,10 @@ public class DiseaseRestController {
         return res;
     }
 
-    @RequestMapping(value="/getdiseasebyname",method = RequestMethod.GET)
-    public Response<Disease> getDiseaseByName(@PathVariable String name){
-        Response<Disease> res=diseaseService.findDiseaseByName(name);
+    @RequestMapping(value="/getdiseasebyname/{Name}",method = RequestMethod.GET)
+    public Response<Disease> getDiseaseByName(@PathVariable String Name){
+        Response<Disease> res=diseaseService.findDiseaseByName(Name);
+        System.out.println(res.getData());
         return res;
     }
 
@@ -53,7 +53,7 @@ public class DiseaseRestController {
     }
 
     @RequestMapping(value= "/updatedisease/{theid}",method = RequestMethod.PUT)
-    public Response<Disease> updateMedicine(@PathVariable String theid, @RequestBody Disease disease){
+    public Response<Disease> updateDisease(@PathVariable String theid, @RequestBody Disease disease){
         Response<Disease> res=diseaseService.updateDisease(theid,disease);
         return res;
 

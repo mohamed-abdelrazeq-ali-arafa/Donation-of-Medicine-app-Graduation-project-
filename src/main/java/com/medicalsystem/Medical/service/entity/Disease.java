@@ -13,7 +13,7 @@ public class Disease {
     @Id
     private String id;
 
-    private String Name;
+    private String name;
     private String description;
     private String additionalInformartion;
     private List<String> symptomsList;
