@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -24,9 +25,9 @@ public class MedicineService implements IMedicineService {
     public Response<Medicine> addMedicine(Medicine medicine) {
         //create stock with each medicine addd and update quantity
         List<String> diseaseList=new ArrayList<String>();
-        diseaseList.add("hello");
-        diseaseList.add("bye");
-        medicine.setDiseasesID(diseaseList);
+        for(String i :diseaseList) {
+            medicine.setDiseasesID(Collections.singletonList(i));
+        }
         var res=new Response();
         medicineRepository.save(medicine);
         res.make("Success insert for Medicine",200,medicine);
