@@ -15,6 +15,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final String[] PUBLIC_ENDPOINTS = {
             "/api/users/**",
+            "/swagger-ui.html"
     };
 
     @Bean
