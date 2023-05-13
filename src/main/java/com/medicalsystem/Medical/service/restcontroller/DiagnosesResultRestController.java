@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 @RestController
 @RequestMapping("api/diagnosesresult")
-public class DiagnosesResultController {
+public class DiagnosesResultRestController {
     @Autowired
     IDiagnosesResultService diagnosesRequestService;
 
-    public DiagnosesResultController(IDiagnosesResultService diagnosesRequestService) {
+    public DiagnosesResultRestController(IDiagnosesResultService diagnosesRequestService) {
 
         this.diagnosesRequestService=diagnosesRequestService;
     }

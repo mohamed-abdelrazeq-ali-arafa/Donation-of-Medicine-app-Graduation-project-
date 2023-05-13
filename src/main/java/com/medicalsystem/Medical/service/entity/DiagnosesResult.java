@@ -16,6 +16,7 @@ public class DiagnosesResult {
     private String id;
 
     private List<String> symptoms;
+    private List<String> medications;
     private String description;
     private String userId;
 

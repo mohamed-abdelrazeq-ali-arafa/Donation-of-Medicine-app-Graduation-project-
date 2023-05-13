@@ -11,12 +11,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/diagnosesrequest")
-public class DiagnosesRequestController {
+public class DiagnosesRequestRestController {
 
     @Autowired
     IDiagnosesRequestService diagnosesRequestService;
 
-    public DiagnosesRequestController(IDiagnosesRequestService diagnosesRequestService) {
+    public DiagnosesRequestRestController(IDiagnosesRequestService diagnosesRequestService) {
 
         this.diagnosesRequestService=diagnosesRequestService;
     }

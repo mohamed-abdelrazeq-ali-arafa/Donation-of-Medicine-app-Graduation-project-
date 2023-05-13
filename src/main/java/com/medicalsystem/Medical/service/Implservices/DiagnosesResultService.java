@@ -85,6 +85,7 @@ public class DiagnosesResultService extends BaseController implements IDiagnoses
             tempDiagnosesResults.setDescription(diagnosesResult.getDescription());
             tempDiagnosesResults.setSymptoms(diagnosesResult.getSymptoms());
             tempDiagnosesResults.setUserId(diagnosesResult.getUserId());
+            tempDiagnosesResults.setMedications(diagnosesResult.getMedications());
 
 
             diagnosesResultRepository.save(tempDiagnosesResults);

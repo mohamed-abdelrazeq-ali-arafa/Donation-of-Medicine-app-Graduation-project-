@@ -5,8 +5,11 @@ import com.medicalsystem.Medical.service.dao.IUserRepository;
 import com.medicalsystem.Medical.service.entity.DoctorRequest;
 import com.medicalsystem.Medical.service.entity.User;
 import com.medicalsystem.Medical.service.restcontroller.BaseController;
+import com.medicalsystem.Medical.service.restcontroller.UserRestController;
 import com.medicalsystem.Medical.service.services.IDoctorRequestService;
 import com.medicalsystem.Medical.service.services.IUserService;;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,9 +26,7 @@ import java.util.List;
 public class UserService extends BaseController implements IUserService, UserDetailsService {
 
     private IUserRepository userRepository;
-
-
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserService.class);
 
     @Bean
     private PasswordEncoder passwordEncoder() {
@@ -48,15 +49,19 @@ public class UserService extends BaseController implements IUserService, UserDet
 
     @Override
     public Response<User> addUser(User user) {
+
+        LOGGER.info("start of UserService.addUser with user id "+user.getEmail());
         user.setPassword(passwordEncoder().encode(user.getPassword()));
         var res=new Response<User>();
         User temp=userRepository.findByEmail(user.getEmail());
+
         if(temp!=null)
             res.make("There is Email with this Name",400,temp);
         else {
             userRepository.save(user);
-            res.make("Success Insertion", 201, user);
+            res.make("Success Insertion of User", 201, user);
         }
+        LOGGER.info("end of UserService.addUser with user id "+user.getId());
         return  res;
 
     }
