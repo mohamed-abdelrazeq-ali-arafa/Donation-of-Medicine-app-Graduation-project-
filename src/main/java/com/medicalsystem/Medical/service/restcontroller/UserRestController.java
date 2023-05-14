@@ -5,6 +5,10 @@ import com.medicalsystem.Medical.service.Response;
 import com.medicalsystem.Medical.service.entity.DoctorRequest;
 import com.medicalsystem.Medical.service.entity.User;
 import com.medicalsystem.Medical.service.services.IUserService;
+//import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -20,6 +24,7 @@ import static org.springframework.http.ResponseEntity.status;
 
 @RestController
 @RequestMapping("/api/users")
+
 public class UserRestController {
 
     private IUserService userService;
@@ -31,7 +36,13 @@ public class UserRestController {
 
 
 
+    @Operation(summary = "Creates a new User")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Created book"),
+            @ApiResponse(responseCode = "400", description = "Bad request"),
+            @ApiResponse(responseCode = "500", description = "Server Error")})
 
+    // to access doc http://localhost:3000/swagger-ui/index.html
     @RequestMapping(value="/adduser",method = RequestMethod.POST)
     public Response<User> addUser(@RequestBody User user){
         Response<User> response=userService.addUser(user);
