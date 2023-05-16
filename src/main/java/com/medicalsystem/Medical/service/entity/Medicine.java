@@ -20,4 +20,5 @@ public class Medicine {
     private String additionalInformation;
     private List<String> diseasesID;
 
+
 }
