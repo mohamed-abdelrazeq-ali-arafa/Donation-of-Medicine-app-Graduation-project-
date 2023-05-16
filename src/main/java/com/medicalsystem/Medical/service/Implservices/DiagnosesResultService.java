@@ -2,6 +2,7 @@ package com.medicalsystem.Medical.service.Implservices;
 
 import com.medicalsystem.Medical.service.Response;
 import com.medicalsystem.Medical.service.dao.IDiagnosesResultRepository;
+import com.medicalsystem.Medical.service.entity.DiagnosesRequest;
 import com.medicalsystem.Medical.service.entity.DiagnosesResult;
 import com.medicalsystem.Medical.service.restcontroller.BaseController;
 import com.medicalsystem.Medical.service.services.IDiagnosesResultService;
@@ -48,6 +49,20 @@ public class DiagnosesResultService extends BaseController implements IDiagnoses
             res.make("Failed Retrive of DiagnosesResult with this id ", 400, null);
         else {
             res.make("Success Retrive of DiagnosesResult", 201, tempDiagnosesResult);
+
+        }
+        return res;
+    }
+
+    @Override
+    public Response<List<DiagnosesResult>> getDiagnosesResultForUserId() {
+        String id=getCurrentUser().getId();
+        Response res = new Response();
+        List<DiagnosesResult> temp= (List<DiagnosesResult>) diagnosesResultRepository.findByUserId(id);
+        if (temp == null)
+            res.make("Failed Retrive of DiagnosesResult with this id for this user ", 400, null);
+        else {
+            res.make("Success Retrive of DiagnosesResult", 201, temp);
 
         }
         return res;

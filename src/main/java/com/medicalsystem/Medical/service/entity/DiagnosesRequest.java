@@ -18,6 +18,7 @@ public class DiagnosesRequest {
     private Long updatedAt;
     private String userId;
     private String diagnoses;
+
     enum status {
 
         PENDNIG,
