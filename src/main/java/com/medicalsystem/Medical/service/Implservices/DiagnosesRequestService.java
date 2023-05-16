@@ -46,6 +46,20 @@ public class DiagnosesRequestService extends BaseController implements IDiagnose
     }
 
     @Override
+    public Response<List<DiagnosesRequest>> getDiagnosesRequestForUserId() {
+        String id=getCurrentUser().getId();
+        Response res = new Response();
+        List<DiagnosesRequest> temp= (List<DiagnosesRequest>) diagnosesRequestRepository.findByUserId(id);
+        if (temp == null)
+            res.make("Failed Retrive of DiagnosesRequest with this id for this user ", 400, null);
+        else {
+            res.make("Success Retrive of DiagnosesRequest", 201, temp);
+
+        }
+        return res;
+    }
+
+    @Override
     public Response<List<DiagnosesRequest>> getAllDiagnosesRequest() {
         var res = new Response();
         List<DiagnosesRequest> diagnosesRequests = diagnosesRequestRepository.findAll();

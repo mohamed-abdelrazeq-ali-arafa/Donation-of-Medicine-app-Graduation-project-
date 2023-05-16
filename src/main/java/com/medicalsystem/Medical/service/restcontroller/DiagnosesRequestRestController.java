@@ -31,6 +31,11 @@ public class DiagnosesRequestRestController {
         Response<DiagnosesRequest> res=diagnosesRequestService.getDiagnosesRequestById(theid);
         return res;
     }
+    @RequestMapping(value="/getdiagnosesrequestforuserid",method = RequestMethod.GET)
+    public Response<List<DiagnosesRequest>> getDiagnosesRequestForUserId(){
+        Response<List<DiagnosesRequest>> res=diagnosesRequestService.getDiagnosesRequestForUserId();
+        return res;
+    }
 
 
     @RequestMapping(value="/getalldiagnosesrequest",method = RequestMethod.GET)

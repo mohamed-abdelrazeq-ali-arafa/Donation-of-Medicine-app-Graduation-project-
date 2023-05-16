@@ -12,6 +12,8 @@ public interface IDiagnosesRequestService {
 
     public Response<DiagnosesRequest> getDiagnosesRequestById(String id);
 
+    public Response<List<DiagnosesRequest>> getDiagnosesRequestForUserId();
+
     public Response<List<DiagnosesRequest>> getAllDiagnosesRequest();
 
     public Response<DiagnosesRequest> deleteDiagnosesRequestById(String id);
