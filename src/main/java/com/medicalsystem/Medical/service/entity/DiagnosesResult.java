@@ -18,10 +18,10 @@ public class DiagnosesResult {
     private Long updatedAt;
     private String userId;
     private String diagnoses;
-
+    private String diagnosisRequestId;
     enum status {
 
-        PENDNIG,
+        PENDING,
         INPROGRESS,
         COMPLETE
 
