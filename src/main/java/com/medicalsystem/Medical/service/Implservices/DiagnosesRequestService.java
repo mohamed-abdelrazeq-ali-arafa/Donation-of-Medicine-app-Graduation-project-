@@ -9,6 +9,8 @@ import com.medicalsystem.Medical.service.restcontroller.BaseController;
 import com.medicalsystem.Medical.service.services.IDiagnosesRequestService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -27,6 +29,10 @@ public class DiagnosesRequestService extends BaseController implements IDiagnose
     public Response<DiagnosesRequest> addDiagnosesRequest(DiagnosesRequest diagnosesRequest) {
         diagnosesRequest.setUserId(getCurrentUser().getId());
         var res=new Response<DiagnosesRequest>();
+        List<String> symptomslist=new ArrayList<String>();
+        for(String i :symptomslist) {
+            diagnosesRequest.setSymptoms(Collections.singletonList(i));
+        }
         diagnosesRequestRepository.save(diagnosesRequest);
         res.make("Success Insert of DiagnosesRequest",201,diagnosesRequest);
         return res;
@@ -88,13 +94,10 @@ public class DiagnosesRequestService extends BaseController implements IDiagnose
             res.make("Failed There is No DiagnosesRequest with this id", 400, null);
         else {
 
-            tempDiagnosesRequest.setDiagnoses(diagnosesRequest.getDiagnoses());
-            tempDiagnosesRequest.setCreatedAt(diagnosesRequest.getCreatedAt());
-            tempDiagnosesRequest.setUpdatedAt(diagnosesRequest.getUpdatedAt());
-            tempDiagnosesRequest.setDoctorId(diagnosesRequest.getDoctorId());
-            tempDiagnosesRequest.setUserId(diagnosesRequest.getUserId());
-            tempDiagnosesRequest.setState(diagnosesRequest.getState());
-
+            tempDiagnosesRequest.setDescription(diagnosesRequest.getDescription());
+            tempDiagnosesRequest.setSymptoms(diagnosesRequest.getSymptoms());
+            tempDiagnosesRequest.setDescription(diagnosesRequest.getDescription());
+            tempDiagnosesRequest.setDate(diagnosesRequest.getDate());
 
             diagnosesRequestRepository.save(tempDiagnosesRequest);
             res.make("Sucess Update of DiagnosesRequest", 200, tempDiagnosesRequest);

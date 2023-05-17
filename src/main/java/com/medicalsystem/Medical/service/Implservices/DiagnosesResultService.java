@@ -32,10 +32,6 @@ public class DiagnosesResultService extends BaseController implements IDiagnoses
     public Response<DiagnosesResult> addDiagnosesResult(DiagnosesResult diagnosesResult) {
         diagnosesResult.setUserId(getCurrentUser().getId());
         var res=new Response<DiagnosesResult>();
-        List<String> symptomslist=new ArrayList<String>();
-        for(String i :symptomslist) {
-            diagnosesResult.setSymptoms(Collections.singletonList(i));
-        }
         diagnosesResultRepository.save(diagnosesResult);
         res.make("Success Insert of DiagnosesResult",201,diagnosesResult);
         return res;
@@ -97,10 +93,10 @@ public class DiagnosesResultService extends BaseController implements IDiagnoses
             res.make("Failed There is No DiagnosesResult with this id", 400, null);
         else {
 
-            tempDiagnosesResults.setDescription(diagnosesResult.getDescription());
-            tempDiagnosesResults.setSymptoms(diagnosesResult.getSymptoms());
-            tempDiagnosesResults.setUserId(diagnosesResult.getUserId());
-            tempDiagnosesResults.setMedications(diagnosesResult.getMedications());
+            tempDiagnosesResults.setDiagnoses(diagnosesResult.getDiagnoses());
+            tempDiagnosesResults.setState(diagnosesResult.getState());
+            tempDiagnosesResults.setDoctorId(diagnosesResult.getDoctorId());
+            tempDiagnosesResults.setUpdatedAt(diagnosesResult.getUpdatedAt());
 
 
             diagnosesResultRepository.save(tempDiagnosesResults);
