@@ -24,9 +24,7 @@ public class Transaction {
     private String medicineId;
 
     private enum status {
-        PENDING,
-        DONE,
-        REJECTED
+        Pending, Delivered, Rejected, Completed, Cancelled, InProgress
     }
 
     private status myStatusValue;
