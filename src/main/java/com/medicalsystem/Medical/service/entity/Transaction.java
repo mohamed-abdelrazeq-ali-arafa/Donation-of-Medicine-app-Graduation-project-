@@ -23,7 +23,7 @@ public class Transaction {
     //medicine has been donated
     private String medicineId;
 
-    private enum status {
+    public enum status {
         Pending, Delivered, Rejected, Completed, Cancelled, InProgress
     }
 

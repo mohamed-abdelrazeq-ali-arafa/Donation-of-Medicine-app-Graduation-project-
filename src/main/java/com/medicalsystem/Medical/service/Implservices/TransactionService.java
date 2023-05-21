@@ -26,7 +26,7 @@ public class TransactionService  extends BaseController implements ITransactionS
     @Override
     public Response<Transaction> addTransaction(Transaction transaction) {
         transaction.setUserId(getCurrentUser().getId());
-        //transaction.setMyStatusValue("");
+        transaction.setMyStatusValue(Transaction.status.InProgress);
         Response<Transaction> res=new Response<Transaction>();
         transactionRepository.save(transaction);
         res.make("Success insert for Transaction",201,transaction);
