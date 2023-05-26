@@ -13,6 +13,10 @@ public class Disease {
     @Id
     private String id;
 
+    //create
+    //if found return res
+    //else script
+
     private String name;
     private String description;
     private String additionalInformartion;

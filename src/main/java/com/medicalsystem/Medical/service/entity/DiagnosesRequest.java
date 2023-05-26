@@ -10,6 +10,9 @@ import java.util.List;
 @Document(collection ="diagnosesrequest")
 public class DiagnosesRequest {
 
+    //get for user id
+    // if doctor show all request
+
     @Id
     private String id;
 

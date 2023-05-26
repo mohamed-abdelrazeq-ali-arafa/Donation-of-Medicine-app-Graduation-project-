@@ -10,6 +10,10 @@ import java.util.List;
 @Document(collection ="medicine")
 public class Medicine {
 
+    //create
+    //if found return res
+    //else script
+
     @Id
     private String id;
     private String name;

@@ -10,6 +10,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.GeneratedValue;
 import javax.persistence.OneToMany;
 import java.util.Collection;
 import java.util.List;
@@ -17,6 +18,8 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @Document(collection="users")
+@Builder
+@AllArgsConstructor
 public class User implements UserDetails {
     @Id
     private String id;
@@ -25,6 +28,9 @@ public class User implements UserDetails {
     private String phone;
     private String userName;
     private Location location;
+    public User(String email){
+        this.email=email;
+    }
 
 
 
