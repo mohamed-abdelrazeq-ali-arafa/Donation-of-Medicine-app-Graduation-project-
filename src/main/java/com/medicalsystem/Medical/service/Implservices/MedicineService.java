@@ -23,14 +23,23 @@ public class MedicineService implements IMedicineService {
 
     @Override
     public Response<Medicine> addMedicine(Medicine medicine) {
+        var res=new Response();
         //create stock with each medicine addd and update quantity
         List<String> diseaseList=new ArrayList<String>();
         for(String i :diseaseList) {
             medicine.setDiseasesID(Collections.singletonList(i));
         }
-        var res=new Response();
-        medicineRepository.save(medicine);
-        res.make("Success insert for Medicine",200,medicine);
+
+        Medicine temp=medicineRepository.findByName(medicine.getName());
+        System.out.println(temp);
+        if(temp!=null)
+            res.make("There is Medicine with this name",400,medicine);
+
+        else {
+            medicineRepository.save(medicine);
+            res.make("Success insert for Medicine", 200, medicine);
+        }
+
         return res;
 
     }

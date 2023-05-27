@@ -80,7 +80,7 @@ public class User implements UserDetails {
     }
 
 
-    private enum type{
+    public enum type{
         DONATOR,
         USER,
         Doctor;

@@ -5,6 +5,7 @@ import com.medicalsystem.Medical.service.Response;
 import com.medicalsystem.Medical.service.dao.IDiagnosesRequestRepository;
 import com.medicalsystem.Medical.service.entity.DiagnosesRequest;
 ;
+import com.medicalsystem.Medical.service.entity.User;
 import com.medicalsystem.Medical.service.restcontroller.BaseController;
 import com.medicalsystem.Medical.service.services.IDiagnosesRequestService;
 import org.springframework.stereotype.Service;
@@ -53,17 +54,39 @@ public class DiagnosesRequestService extends BaseController implements IDiagnose
 
     @Override
     public Response<List<DiagnosesRequest>> getDiagnosesRequestForUserId() {
-        String id=getCurrentUser().getId();
-        Response res = new Response();
-        List<DiagnosesRequest> temp= (List<DiagnosesRequest>) diagnosesRequestRepository.findByUserId(id);
-        if (temp == null)
-            res.make("Failed Retrive of DiagnosesRequest with this id for this user ", 400, null);
-        else {
-            res.make("Success Retrive of DiagnosesRequest", 201, temp);
 
+        String id=getCurrentUser().getId();
+
+        var res = new Response();
+        List<DiagnosesRequest> temp=  diagnosesRequestRepository.findByUserId(id);
+        List<DiagnosesRequest> diagnosesRequests = diagnosesRequestRepository.findAll();
+
+
+        boolean result =checkIfDoctorOrNot(getCurrentUser());
+        System.out.println(result);
+        if (result)
+            res.make("Success Retrive of all  DiagnosesRequest", 200, diagnosesRequests);
+
+        else if (result==false)  {
+            if(temp==null)
+                res.make("Failed Retrive of DiagnosesRequest", 400, temp);
+            else
+                res.make("Success Retrive of DiagnosesRequest", 201, temp);
         }
         return res;
     }
+
+    public boolean checkIfDoctorOrNot(User user ){
+       String typeOfUser =user.getEnumType().toString();
+        if(typeOfUser.equals("Doctor"))
+            return true;
+        return false;
+    }
+
+
+
+
+
 
     @Override
     public Response<List<DiagnosesRequest>> getAllDiagnosesRequest() {

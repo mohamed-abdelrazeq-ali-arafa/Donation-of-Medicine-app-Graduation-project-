@@ -25,6 +25,8 @@ public class DiseaseService implements IDiseaseService {
         if(temp!=null)
             res.make("There is disease with this Name",400,temp);
         else {
+
+            //run the script
             diseaseRepository.save(disease);
             res.make("Success Insertion", 201, disease);
         }

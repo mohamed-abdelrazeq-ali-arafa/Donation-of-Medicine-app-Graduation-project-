@@ -61,7 +61,6 @@ class IUserServiceTest {
     }
 
     @Test
-
     void deleteUserById() {
         User user=new User("ahmed505@gmail.com","90");
         userService.addUser(user);
