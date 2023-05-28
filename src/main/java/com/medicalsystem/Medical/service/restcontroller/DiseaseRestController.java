@@ -6,6 +6,7 @@ import com.medicalsystem.Medical.service.services.IDiseaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -20,7 +21,7 @@ public class DiseaseRestController {
         this.diseaseService=diseaseService;
     }
     @RequestMapping(value="/adddisease",method = RequestMethod.POST)
-    public Response<Disease> addDisease(@RequestBody  Disease disease){
+    public Response<Disease> addDisease(@RequestBody  Disease disease) throws IOException, InterruptedException {
         Response<Disease> res=diseaseService.addDisease(disease);
         return res;
     }

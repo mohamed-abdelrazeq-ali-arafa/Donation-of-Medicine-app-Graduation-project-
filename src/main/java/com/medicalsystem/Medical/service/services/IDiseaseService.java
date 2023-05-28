@@ -3,11 +3,12 @@ package com.medicalsystem.Medical.service.services;
 import com.medicalsystem.Medical.service.Response;
 import com.medicalsystem.Medical.service.entity.Disease;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface IDiseaseService {
 
-    public Response<Disease> addDisease(Disease disease);
+    public Response<Disease> addDisease(Disease disease) throws InterruptedException, IOException;
 
     public Response<Disease> getDiseaseById(String id);
 

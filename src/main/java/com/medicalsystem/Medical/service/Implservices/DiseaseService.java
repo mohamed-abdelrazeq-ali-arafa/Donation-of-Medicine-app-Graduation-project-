@@ -7,6 +7,8 @@ import com.medicalsystem.Medical.service.services.IDiseaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -19,16 +21,19 @@ public class DiseaseService implements IDiseaseService {
     }
 
     @Override
-    public Response<Disease> addDisease(Disease disease) {
+    public Response<Disease> addDisease(Disease disease) throws InterruptedException, IOException {
         var res = new Response();
-        Disease temp=diseaseRepository.findByName(disease.getName());
-        if(temp!=null)
-            res.make("There is disease with this Name",400,temp);
+        Disease temp = diseaseRepository.findByName(disease.getName());
+        if (temp != null)
+            res.make("There is disease with this Name", 400, temp);
         else {
-
-            //run the script
-            diseaseRepository.save(disease);
-            res.make("Success Insertion", 201, disease);
+            String workingDirectory = "/home/mohamed/PycharmProjects/medicineWebScrap";
+            var process = new ProcessBuilder("python", "DiseaseScraper.py", disease.getName())
+                    .directory(new File(workingDirectory))
+                    .start();
+            process.waitFor();
+            temp = diseaseRepository.findByName(disease.getName());
+            res.make("Success Insertion", 201, temp);
         }
         return res;
     }
@@ -45,7 +50,6 @@ public class DiseaseService implements IDiseaseService {
         }
         return res;
     }
-
 
 
     @Override
