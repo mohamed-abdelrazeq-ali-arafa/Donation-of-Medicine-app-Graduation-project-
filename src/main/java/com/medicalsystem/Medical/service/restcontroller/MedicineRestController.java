@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.*;
 
 @RestController
@@ -22,7 +23,7 @@ public class MedicineRestController {
     }
 
     @RequestMapping(value="/addmedicine",method = RequestMethod.POST)
-    public Response<Medicine> addMedicine(@RequestBody Medicine medicine){
+    public Response<Medicine> addMedicine(@RequestBody Medicine medicine) throws IOException, InterruptedException {
         Response<Medicine> res=medicineService.addMedicine(medicine);
         return res;
     }
