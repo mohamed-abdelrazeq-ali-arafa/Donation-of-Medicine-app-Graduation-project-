@@ -58,16 +58,15 @@ public class DiagnosesRequestService extends BaseController implements IDiagnose
         String id=getCurrentUser().getId();
 
         var res = new Response();
-        List<DiagnosesRequest> temp=  diagnosesRequestRepository.findByUserId(id);
-        List<DiagnosesRequest> diagnosesRequests = diagnosesRequestRepository.findAll();
-
 
         boolean result =checkIfDoctorOrNot(getCurrentUser());
-        System.out.println(result);
-        if (result)
-            res.make("Success Retrive of all  DiagnosesRequest", 200, diagnosesRequests);
 
+        if (result) {
+            List<DiagnosesRequest> diagnosesRequests = diagnosesRequestRepository.findAll();
+            res.make("Success Retrive of all  DiagnosesRequest", 200, diagnosesRequests);
+        }
         else if (result==false)  {
+            List<DiagnosesRequest> temp=  diagnosesRequestRepository.findByUserId(id);
             if(temp==null)
                 res.make("Failed Retrive of DiagnosesRequest", 400, temp);
             else
@@ -75,17 +74,6 @@ public class DiagnosesRequestService extends BaseController implements IDiagnose
         }
         return res;
     }
-
-    public boolean checkIfDoctorOrNot(User user ){
-       String typeOfUser =user.getEnumType().toString();
-        if(typeOfUser.equals("Doctor"))
-            return true;
-        return false;
-    }
-
-
-
-
 
 
     @Override

@@ -10,4 +10,11 @@ public abstract  class BaseController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return (User) authentication.getPrincipal();
     }
+
+    public boolean checkIfDoctorOrNot(User user ){
+        String typeOfUser =user.getEnumType().toString();
+        if(typeOfUser.equals("Doctor"))
+            return true;
+        return false;
+    }
 }

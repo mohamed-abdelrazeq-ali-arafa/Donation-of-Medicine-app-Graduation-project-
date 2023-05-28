@@ -52,14 +52,18 @@ public class DiagnosesResultService extends BaseController implements IDiagnoses
 
     @Override
     public Response<List<DiagnosesResult>> getDiagnosesResultForUserId() {
-        String id=getCurrentUser().getId();
-        Response res = new Response();
-        List<DiagnosesResult> temp= (List<DiagnosesResult>) diagnosesResultRepository.findByUserId(id);
-        if (temp == null)
-            res.make("Failed Retrive of DiagnosesResult with this id for this user ", 400, null);
-        else {
-            res.make("Success Retrive of DiagnosesResult", 201, temp);
-
+        boolean result =checkIfDoctorOrNot(getCurrentUser());
+        var res =new Response();
+        if (result) {
+            List<DiagnosesResult> diagnosesRsults = diagnosesResultRepository.findAll();
+            res.make("Success Retrive of all  DiagnosesResult", 200, diagnosesRsults);
+        }
+        else if (result==false)  {
+            List<DiagnosesResult> temp=  diagnosesResultRepository.findByUserId(getCurrentUser().getId());
+            if(temp==null)
+                res.make("Failed Retrive of DiagnosesResult", 400, temp);
+            else
+                res.make("Success Retrive of DiagnosesResult", 201, temp);
         }
         return res;
     }
