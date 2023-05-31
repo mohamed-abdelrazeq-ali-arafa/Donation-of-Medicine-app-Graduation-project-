@@ -24,14 +24,13 @@ public class Transaction {
     private String medicineId;
 
     public enum status {
-        Pending, Delivered, Rejected, Completed, Cancelled, InProgress
+        Pending, Delivered, Rejected, Completed, Cancelled, InProgress, Active
     }
 
     private status myStatusValue;
     private String receiverId;
     private String senderId;
-    private String receiverName;
-    private String senderName;
+
     private int quantity;
     private String donationRequestId;
 
