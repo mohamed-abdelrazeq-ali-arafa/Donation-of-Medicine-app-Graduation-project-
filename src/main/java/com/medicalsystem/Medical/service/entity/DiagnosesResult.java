@@ -14,7 +14,10 @@ public class DiagnosesResult {
    private String id;
 
     private String diseaseId;
+
     private List<String> medicationId;
+
+
     private String DoctorId;
     private status state;
     private Long createdAt;

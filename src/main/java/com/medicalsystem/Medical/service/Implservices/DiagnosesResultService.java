@@ -4,13 +4,14 @@ import com.medicalsystem.Medical.service.Response;
 import com.medicalsystem.Medical.service.dao.IDiagnosesResultRepository;
 import com.medicalsystem.Medical.service.entity.DiagnosesRequest;
 import com.medicalsystem.Medical.service.entity.DiagnosesResult;
+import com.medicalsystem.Medical.service.entity.Transaction;
 import com.medicalsystem.Medical.service.restcontroller.BaseController;
+import com.medicalsystem.Medical.service.services.IDiagnosesRequestService;
 import com.medicalsystem.Medical.service.services.IDiagnosesResultService;
+import com.medicalsystem.Medical.service.services.ITransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -24,7 +25,11 @@ public class DiagnosesResultService extends BaseController implements IDiagnoses
         this.diagnosesResultRepository=diagnosesResultRepository;
 
     }
+    @Autowired
+    private ITransactionService transactionService;
 
+    @Autowired
+    private IDiagnosesRequestService diagnosesRequestService;
 
 
 
@@ -96,6 +101,21 @@ public class DiagnosesResultService extends BaseController implements IDiagnoses
         if (tempDiagnosesResults == null)
             res.make("Failed There is No DiagnosesResult with this id", 400, null);
         else {
+            String statusValue= String.valueOf((diagnosesResult.getState()));
+            if(statusValue.equals("COMPLETE")){
+
+                for (String i:diagnosesResult.getMedicationId()) {
+                    Transaction transaction=new Transaction();
+                    transaction.setQuantity(1);
+                    transaction.setMyStatusValue(Transaction.status.valueOf("ACTIVE"));
+                    transaction.setMedicineId(i);
+                    //get user id to save in transaction
+                    Response<DiagnosesRequest> diagnosesRequest=diagnosesRequestService.getDiagnosesRequestById(diagnosesResult.getDiagnosisRequestId());
+                    transaction.setReceiverId(diagnosesRequest.getData().getUserId());
+                    transactionService.addTransaction(transaction);
+                }
+
+            }
 
             tempDiagnosesResults.setDiagnoses(diagnosesResult.getDiagnoses());
             tempDiagnosesResults.setState(diagnosesResult.getState());

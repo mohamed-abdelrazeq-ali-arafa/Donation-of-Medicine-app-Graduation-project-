@@ -33,9 +33,6 @@ public class User implements UserDetails {
     }
 
 
-
-
-
     public Location getLocation() {
         return location;
     }

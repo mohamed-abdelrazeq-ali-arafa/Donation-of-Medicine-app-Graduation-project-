@@ -1,14 +1,9 @@
 package com.medicalsystem.Medical.service.services;
 
 import com.medicalsystem.Medical.service.Response;
-import com.medicalsystem.Medical.service.entity.DoctorRequest;
 import com.medicalsystem.Medical.service.entity.User;
-import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.print.Doc;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public interface IUserService {
 

@@ -1,10 +1,7 @@
 package com.medicalsystem.Medical.service.services;
 
 import com.medicalsystem.Medical.service.Response;
-import com.medicalsystem.Medical.service.entity.DoctorRequest;
-import org.springframework.stereotype.Service;
 
-import javax.print.Doc;
 import java.util.List;
 
 

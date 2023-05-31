@@ -11,10 +11,10 @@ import java.util.List;
 public class DiagnosesRequest {
 
     //get for user id
-    // if doctor show all request
 
     @Id
-    private String id;
+     private String id;
+
 
      private String userId;
      List<String> symptoms;
