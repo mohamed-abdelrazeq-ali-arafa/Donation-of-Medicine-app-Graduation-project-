@@ -85,7 +85,13 @@ public class TransactionService  extends BaseController implements ITransactionS
             tempTransaction.setCreatedAt(transaction.getCreatedAt());
             tempTransaction.setMedicineId(transaction.getMedicineId());
             tempTransaction.setUserId(transaction.getUserId());
+            tempTransaction.setReceiverId(transaction.getReceiverId());
+            tempTransaction.setSenderId(transaction.getSenderId());
+            tempTransaction.setReceiverName(transaction.getReceiverName());
+            tempTransaction.setSenderName(transaction.getSenderName());
+            tempTransaction.setUserId(transaction.getUserId());
             transactionRepository.save(tempTransaction);
+
             res.make("Successfull Update for transaction",200,tempTransaction);
         }
         return res;
