@@ -1,12 +1,9 @@
 package com.medicalsystem.Medical.service;
 
-import com.medicalsystem.Medical.service.restcontroller.UserRestController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 //import org.springframework.security.crypto.password.PasswordEncoder;
 
 @SpringBootApplication

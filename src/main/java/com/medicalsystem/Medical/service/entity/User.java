@@ -92,8 +92,6 @@ public class User implements UserDetails {
     private String diseaseId;
 
 
-    private DoctorRequest doctorRequest;
-
     public User(String email, String password) {
         this.email = email;
         this.password = password;

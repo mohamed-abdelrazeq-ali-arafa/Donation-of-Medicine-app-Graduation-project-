@@ -2,12 +2,9 @@ package com.medicalsystem.Medical.service.Implservices;
 
 import com.medicalsystem.Medical.service.Response;
 import com.medicalsystem.Medical.service.dao.IUserRepository;
-import com.medicalsystem.Medical.service.entity.DoctorRequest;
 import com.medicalsystem.Medical.service.entity.User;
 import com.medicalsystem.Medical.service.restcontroller.BaseController;
-import com.medicalsystem.Medical.service.restcontroller.UserRestController;
-import com.medicalsystem.Medical.service.services.IDoctorRequestService;
-import com.medicalsystem.Medical.service.services.IUserService;;
+import com.medicalsystem.Medical.service.services.IUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +14,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+
+;
 
 @Service
 public class UserService extends BaseController implements IUserService, UserDetailsService {

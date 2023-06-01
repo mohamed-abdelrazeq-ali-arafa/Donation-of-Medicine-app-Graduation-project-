@@ -107,7 +107,7 @@ public class DiagnosesResultService extends BaseController implements IDiagnoses
                 for (String i:diagnosesResult.getMedicationId()) {
                     Transaction transaction=new Transaction();
                     transaction.setQuantity(1);
-                    transaction.setMyStatusValue(Transaction.status.valueOf("ACTIVE"));
+                    transaction.setMyStatusValue(Transaction.status.Active);
                     transaction.setMedicineId(i);
                     //get user id to save in transaction
                     Response<DiagnosesRequest> diagnosesRequest=diagnosesRequestService.getDiagnosesRequestById(diagnosesResult.getDiagnosisRequestId());
@@ -121,7 +121,8 @@ public class DiagnosesResultService extends BaseController implements IDiagnoses
             tempDiagnosesResults.setState(diagnosesResult.getState());
             tempDiagnosesResults.setDoctorId(diagnosesResult.getDoctorId());
             tempDiagnosesResults.setUpdatedAt(diagnosesResult.getUpdatedAt());
-
+            tempDiagnosesResults.setMedicationId(diagnosesResult.getMedicationId());
+            tempDiagnosesResults.setDiseaseId(diagnosesResult.getDiseaseId());
 
             diagnosesResultRepository.save(tempDiagnosesResults);
             res.make("Sucess Update of DiagnosesResult", 200, tempDiagnosesResults);
