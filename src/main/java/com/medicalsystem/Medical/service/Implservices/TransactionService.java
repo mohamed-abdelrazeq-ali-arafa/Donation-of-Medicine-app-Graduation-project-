@@ -6,6 +6,7 @@ import com.medicalsystem.Medical.service.dao.ITransactionRepository;
 import com.medicalsystem.Medical.service.entity.Transaction;
 import com.medicalsystem.Medical.service.entity.User;
 import com.medicalsystem.Medical.service.restcontroller.BaseController;
+import com.medicalsystem.Medical.service.services.IDonationRequestService;
 import com.medicalsystem.Medical.service.services.ITransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -15,34 +16,36 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class TransactionService  extends BaseController implements ITransactionService {
+public class TransactionService extends BaseController implements ITransactionService {
 
     ITransactionRepository transactionRepository;
+
     @Autowired
     public TransactionService(ITransactionRepository transactionRepository) {
-        this.transactionRepository=transactionRepository;
+        this.transactionRepository = transactionRepository;
     }
+
+    @Autowired
+    private IDonationRequestService donationRequestService;
 
     @Override
     public Response<Transaction> addTransaction(Transaction transaction) {
         transaction.setUserId(getCurrentUser().getId());
         transaction.setMyStatusValue(Transaction.status.Active);
-        Response<Transaction> res=new Response<Transaction>();
+        Response<Transaction> res = new Response<Transaction>();
         transactionRepository.save(transaction);
-        res.make("Success insert for Transaction",201,transaction);
-        return  res;
+        res.make("Success insert for Transaction", 201, transaction);
+        return res;
     }
 
 
     @Override
     public Response<Transaction> getTransaction(String id) {
-        Response<Transaction> res=new Response<Transaction>();
+        Response<Transaction> res = new Response<Transaction>();
         Transaction result = transactionRepository.findById(id).orElse(null);
-        if(result==null)
-        {
+        if (result == null) {
             res.make("Failed to reterive  for Transaction id is not found", 400, result);
-        }
-        else {
+        } else {
             res.make("Success Retreive  for Transaction ", 201, result);
         }
         return res;
@@ -51,13 +54,11 @@ public class TransactionService  extends BaseController implements ITransactionS
 
     @Override
     public Response<Transaction> deleteTransaction(String id) {
-        Response<Transaction> res=new Response<Transaction>();
-        Transaction temptransaction=transactionRepository.findById(id).orElse(null);
-        if(temptransaction==null)
-        {
+        Response<Transaction> res = new Response<Transaction>();
+        Transaction temptransaction = transactionRepository.findById(id).orElse(null);
+        if (temptransaction == null) {
             res.make("Failed to Delete  for Transaction id is not found", 400, temptransaction);
-        }
-        else {
+        } else {
             transactionRepository.deleteById(id);
             res.make("Success Delettion  for Transaction ", 201, temptransaction);
         }
@@ -68,17 +69,17 @@ public class TransactionService  extends BaseController implements ITransactionS
 
     @Override
     public Response<List<Transaction>> getallTransaction() {
-        Response<List<Transaction>> res=new Response<>();
-        List<Transaction> transactions=transactionRepository.findAll();
+        Response<List<Transaction>> res = new Response<>();
+        List<Transaction> transactions = transactionRepository.findAll();
         res.make("Success Retrive of Transaction", 201, transactions);
         return res;
     }
 
     @Override
-    public Response<Transaction> updateTransaction(String theid,Transaction transaction) {
-        var res=new Response<Transaction>();
-        var tempTransaction=transactionRepository.findById(theid).orElse(null);
-        if(tempTransaction==null)
+    public Response<Transaction> updateTransaction(String theid, Transaction transaction) {
+        var res = new Response<Transaction>();
+        var tempTransaction = transactionRepository.findById(theid).orElse(null);
+        if (tempTransaction == null)
             res.make("Failed updated for Transaction ", 201, null);
         else {
             tempTransaction.setMyStatusValue(transaction.getMyStatusValue());
@@ -89,8 +90,9 @@ public class TransactionService  extends BaseController implements ITransactionS
             tempTransaction.setSenderId(transaction.getSenderId());
             tempTransaction.setUserId(transaction.getUserId());
             transactionRepository.save(tempTransaction);
-
-            res.make("Successfull Update for transaction",200,tempTransaction);
+            if (transaction.getDonationRequestId() != null && transaction.getSenderId() != null && !transaction.getSenderId().equals(""))
+                updateDonationRequest(transaction.getDonationRequestId(), transaction.getQuantity());
+            res.make("Successfull Update for transaction", 200, tempTransaction);
         }
         return res;
 
@@ -99,16 +101,25 @@ public class TransactionService  extends BaseController implements ITransactionS
 
     @Override
     public Response<List<Transaction>> getTransactionByUserId() {
-        Response<List<Transaction>> res=new Response<>();
-        List<Transaction> tempTransactions=transactionRepository.findByUserId(getCurrentUser().getId());
-        if(tempTransactions==null)
-        {
+        Response<List<Transaction>> res = new Response<>();
+        List<Transaction> tempTransactions = transactionRepository.findByUserId(getCurrentUser().getId());
+        if (tempTransactions == null) {
             res.make("Failed to Get   Transaction with this id", 400, tempTransactions);
-        }
-        else {
-           res.make("Sucessfull return",200,tempTransactions);
+        } else {
+            res.make("Sucessfull return", 200, tempTransactions);
         }
         return res;
     }
 
+    private void updateDonationRequest(String donationRequestId, int quantity) {
+        var donationRequest = donationRequestService.getDonationRequest(donationRequestId).getData();
+        int collected = donationRequest.getCollected() + quantity;
+        donationRequest.setCollected(collected);
+        donationRequest.setConteibuterCount(donationRequest.getConteibuterCount() + 1);
+        if (collected >= donationRequest.getNeeded())
+            donationRequestService.deleteDonationRequest(donationRequest.getId());
+        else
+            donationRequestService.updateDonationRequest(donationRequest.getId(), donationRequest);
+
+    }
 }
