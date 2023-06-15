@@ -30,7 +30,8 @@ public class Transaction {
     private status myStatusValue;
     private String receiverId;
     private String senderId;
-
+    private boolean isDelivered;
+    private boolean isReceived;
     private int quantity;
     private String donationRequestId;
 

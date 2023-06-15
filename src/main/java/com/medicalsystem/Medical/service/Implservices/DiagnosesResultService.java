@@ -2,18 +2,14 @@ package com.medicalsystem.Medical.service.Implservices;
 
 import com.medicalsystem.Medical.service.Response;
 import com.medicalsystem.Medical.service.dao.IDiagnosesResultRepository;
-import com.medicalsystem.Medical.service.entity.DiagnosesRequest;
-import com.medicalsystem.Medical.service.entity.DiagnosesResult;
-import com.medicalsystem.Medical.service.entity.DonationRequest;
-import com.medicalsystem.Medical.service.entity.Transaction;
+import com.medicalsystem.Medical.service.entity.*;
 import com.medicalsystem.Medical.service.restcontroller.BaseController;
-import com.medicalsystem.Medical.service.services.IDiagnosesRequestService;
-import com.medicalsystem.Medical.service.services.IDiagnosesResultService;
-import com.medicalsystem.Medical.service.services.IDonationRequestService;
-import com.medicalsystem.Medical.service.services.ITransactionService;
+import com.medicalsystem.Medical.service.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -36,12 +32,23 @@ public class DiagnosesResultService extends BaseController implements IDiagnoses
     private IDiagnosesRequestService diagnosesRequestService;
 
     @Autowired
+    private IDiseaseService diseaseService;
+
+    @Autowired
     private IDonationRequestService donationRequestService;
 
 
     @Override
     public Response<DiagnosesResult> addDiagnosesResult(DiagnosesResult diagnosesResult) {
         diagnosesResult.setUserId(getCurrentUser().getId());
+        var diagnosisRequest = diagnosesRequestService.getDiagnosesRequestById(diagnosesResult.getDiagnosisRequestId()).getData();
+        var symptoms = diagnosisRequest.getSymptoms();
+        try {
+            var disease = predict(symptoms);
+            diagnosesResult.setDiseaseId(disease.getId());
+        } catch (InterruptedException | IOException e) {
+            System.out.println("Error in predict function");
+        }
         var res = new Response<DiagnosesResult>();
         diagnosesResultRepository.save(diagnosesResult);
         res.make("Success Insert of DiagnosesResult", 201, diagnosesResult);
@@ -164,5 +171,70 @@ public class DiagnosesResultService extends BaseController implements IDiagnoses
             donationRequestService.addDonationRequest(donationRequest);
         }
         return donationRequest;
+    }
+
+    private Disease predict(List<String> symptoms) throws InterruptedException, IOException {
+        var symptomsEncodedString = new StringBuilder();
+        getSymptoms().forEach(x -> {
+            if (symptoms.contains(x)) symptomsEncodedString.append('1');
+            else symptomsEncodedString.append('0');
+        });
+        String workingDirectory = "C:\\Users\\mohamed\\Desktop\\MedicalServicePredictionModel";
+        var process = new ProcessBuilder("python", "test.py", symptomsEncodedString.toString())
+                .directory(new File(workingDirectory))
+                .start();
+        process.waitFor();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(workingDirectory + "/prediction.txt")));
+        String diseaseName = reader.readLine();
+        reader.close();
+
+        System.out.println(diseaseName);
+        var diseaseResponse = diseaseService.findDiseaseByName(diseaseName);
+        if (diseaseResponse.isSuccess())
+            return diseaseResponse.getData();
+        else {
+            process = new ProcessBuilder("python", "DiseaseManagerBSoup.py", diseaseName)
+                    .directory(new File("/home/mohamed/PycharmProjects/medicineWebScrap/"))
+                    .start();
+            process.waitFor();
+        }
+        diseaseResponse = diseaseService.findDiseaseByName(diseaseName);
+        return diseaseResponse.getData();
+    }
+
+    private static ArrayList<String> getSymptoms() {
+        var symptoms = new ArrayList<String>();
+        symptoms.add("itching");
+        symptoms.add("skin_rash");
+        symptoms.add("chills");
+        symptoms.add("joint_pain");
+        symptoms.add("vomiting");
+        symptoms.add("fatigue");
+        symptoms.add("weight_loss");
+        symptoms.add("lethargy");
+        symptoms.add("cough");
+        symptoms.add("high_fever");
+        symptoms.add("breathlessness");
+        symptoms.add("sweating");
+        symptoms.add("headache");
+        symptoms.add("yellowish_skin");
+        symptoms.add("dark_urine");
+        symptoms.add("nausea");
+        symptoms.add("loss_of_appetite");
+        symptoms.add("abdominal_pain");
+        symptoms.add("diarrhoea");
+        symptoms.add("mild_fever");
+        symptoms.add("yellowing_of_eyes");
+        symptoms.add("swelled_lymph_nodes");
+        symptoms.add("malaise");
+        symptoms.add("blurred_and_distorted_vision");
+        symptoms.add("phlegm");
+        symptoms.add("chest_pain");
+        symptoms.add("dizziness");
+        symptoms.add("excessive_hunger");
+        symptoms.add("loss_of_balance");
+        symptoms.add("irritability");
+        symptoms.add("muscle_pain");
+        return symptoms;
     }
 }
